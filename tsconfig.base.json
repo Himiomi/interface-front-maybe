@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@interface-front/different-page": ["libs/different-page/src/index.ts"],
+      "@interface-front/menu": ["libs/menu/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

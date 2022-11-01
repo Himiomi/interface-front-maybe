@@ -1,0 +1,7 @@
+<button
+  mat-stroked-button color="primary"
+  (click)="sidenav.toggle()"
+>
+  <p *ngIf="!sidenav.opened">Menu</p>
+  <p *ngIf="sidenav.opened">Fermer</p>
+</button>
