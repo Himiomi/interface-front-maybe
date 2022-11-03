@@ -6,15 +6,31 @@ import { HelpComponent } from './help/help.component';
 import { AboutComponent } from './about/about.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountComponent } from './account/account.component';
+import { HomeComponent } from './home/home.component';
+import {FormsModule} from "@angular/forms";
+import {IgxCarouselModule, IgxSliderModule} from "igniteui-angular";
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    IgxCarouselModule,
+    IgxSliderModule
+  ],
   declarations: [
     HelpComponent,
     AboutComponent,
     SettingsComponent,
     AccountComponent,
+    HomeComponent,
   ],
-  exports: [HelpComponent, AboutComponent, SettingsComponent, AccountComponent],
+  exports: [
+    HelpComponent,
+    AboutComponent,
+    SettingsComponent,
+    AccountComponent,
+    HomeComponent,
+  ],
 })
 export class DifferentPageModule {}

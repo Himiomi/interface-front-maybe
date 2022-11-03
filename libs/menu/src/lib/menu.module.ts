@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CircleMenuComponent } from './circle-menu/circle-menu.component';
-import { RouterOutlet } from '@angular/router';
+import {RouterModule, RouterOutlet} from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
@@ -16,6 +16,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   imports: [
     CommonModule,
     RouterOutlet,
+    RouterModule,
     MatSidenavModule,
     MatDividerModule,
     MatToolbarModule,

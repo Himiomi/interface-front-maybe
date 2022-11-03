@@ -1,7 +1,7 @@
 <table id="sidenavTable">
   <tr *ngFor="let bouton of buttonList">
     <td>
-      <button mat-button class="mat-button" >
+      <button mat-button class="mat-button" routerLink="{{ bouton.link }}">
         {{ bouton.name }}
       </button>
     </td>

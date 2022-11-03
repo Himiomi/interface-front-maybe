@@ -1,14 +1,16 @@
-<interface-front-button [sidenav]="sidenav"></interface-front-button>
+<div class="menu">
+  <interface-front-button [sidenav]="sidenav"></interface-front-button>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav="" class="mat-elevation-z8">
+      <mat-divider></mat-divider>
+      <interface-front-button-choice [buttonList]="buttonList">
+      </interface-front-button-choice>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content mat-elevation-z8">
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav="" class="mat-elevation-z8">
-    <mat-divider></mat-divider>
-    <interface-front-button-choice [buttonList]="buttonList">
-    </interface-front-button-choice>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content mat-elevation-z8">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<router-outlet></router-outlet>
