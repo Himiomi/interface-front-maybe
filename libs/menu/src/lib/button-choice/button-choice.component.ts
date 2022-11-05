@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {BoutonCircleMenu} from "../bouton-circle-menu";
 
 @Component({

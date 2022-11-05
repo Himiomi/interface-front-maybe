@@ -7,8 +7,10 @@ import { AboutComponent } from './about/about.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AccountComponent } from './account/account.component';
 import { HomeComponent } from './home/home.component';
-import {FormsModule} from "@angular/forms";
-import {IgxCarouselModule, IgxSliderModule} from "igniteui-angular";
+import { FormsModule } from '@angular/forms';
+import { IgxCarouselModule, IgxSliderModule } from 'igniteui-angular';
+import { DetailPageComponent } from './detail-page/detail-page.component';
+
 
 @NgModule({
   imports: [
@@ -16,7 +18,7 @@ import {IgxCarouselModule, IgxSliderModule} from "igniteui-angular";
     RouterModule,
     FormsModule,
     IgxCarouselModule,
-    IgxSliderModule
+    IgxSliderModule,
   ],
   declarations: [
     HelpComponent,
@@ -24,6 +26,7 @@ import {IgxCarouselModule, IgxSliderModule} from "igniteui-angular";
     SettingsComponent,
     AccountComponent,
     HomeComponent,
+    DetailPageComponent,
   ],
   exports: [
     HelpComponent,
@@ -31,6 +34,7 @@ import {IgxCarouselModule, IgxSliderModule} from "igniteui-angular";
     SettingsComponent,
     AccountComponent,
     HomeComponent,
+    DetailPageComponent,
   ],
 })
 export class DifferentPageModule {}

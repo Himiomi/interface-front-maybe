@@ -7,7 +7,7 @@ import {RouterModule, RouterOutlet} from "@angular/router";
 import {MenuModule} from "@interface-front/menu";
 import {
   AboutComponent,
-  AccountComponent,
+  AccountComponent, DetailPageComponent,
   HelpComponent,
   HomeComponent,
   SettingsComponent
@@ -27,6 +27,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
         {path: 'about',   component: AboutComponent},
         {path: 'setting', component: SettingsComponent},
         {path: 'home',    component: HomeComponent},
+        {path: 'detail', component: DetailPageComponent }
       ]),
     MatToolbarModule,
   ],

@@ -5,6 +5,8 @@
     "classic-client": "apps/classic-client",
     "classic-client-e2e": "apps/classic-client-e2e",
     "different-page": "libs/different-page",
-    "menu": "libs/menu"
+    "entity": "libs/entity",
+    "menu": "libs/menu",
+    "storage": "libs/storage"
   }
 }
