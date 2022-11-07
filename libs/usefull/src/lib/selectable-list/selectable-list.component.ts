@@ -1,5 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {Sensor} from "@interface-front/entity";
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'interface-front-selectable-list',
@@ -7,31 +6,32 @@ import {Sensor} from "@interface-front/entity";
   styleUrls: ['./selectable-list.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class SelectableListComponent  {
+export class SelectableListComponent implements OnChanges {
   name = 'Angular';
   masterSelected: boolean;
-  checklist: any[]=[];
+  checklist: any[] = [];
   checkedList: any;
   @Input()
-  listObject!:any[];
+  listObject!: any[];
   @Input()
-  test!:any;
+  test!: number;
 
   constructor() {
-    console.log("test: "+this.test)
     this.masterSelected = false;
-    console.log(this.listObject)
-    if(this.listObject===undefined){
-      this.checklist=[]
-    }else {
-      this.listObject.forEach(
-        (value, index) => {
-          this.checklist.push({id: index, value: value.toString(), comment: '', isSelected: false})
-        }
-      )
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.masterSelected = false;
+    console.log("chaque objet")
+    if (this.listObject === undefined) {
+      this.checklist = []
+    } else {
+      for (let i = 0; i < this.listObject[0].length; i++) {
+        this.checklist.push({id:this.listObject[0][i].id , value: this.listObject[0][i].toString(), isSelected: false})
+      }
     }
     this.getCheckedItemList();
-  }
+    }
 
   // The master checkbox will check/ uncheck all items
   checkUncheckAll() {
@@ -59,7 +59,7 @@ export class SelectableListComponent  {
     this.checkedList = JSON.stringify(this.checkedList);
   }
   onRegister(){
-    console.log('data to be saved',this.checkedList);
+    alert("graphique des capteurs numéros "+this.checklist.filter(current=>current.isSelected).map(current2=>current2.id))
   }
 
 }

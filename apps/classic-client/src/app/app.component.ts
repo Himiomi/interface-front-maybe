@@ -26,6 +26,10 @@ export class AppComponent implements OnInit{
 
     this.sensorDao.add(new Sensor(1,"Premier",1,1))
     this.sensorDao.add(new Sensor(2,"Deuxieme",1,1))
+    this.sensorDao.add(new Sensor(3,"Courgette",1,1))
+    this.sensorDao.add(new Sensor(4,"Entrée",1,1))
+    this.sensorDao.add(new Sensor(5,"Extérieur",1,1))
+    this.sensorDao.add(new Sensor(6,"Tomate",1,1))
     console.log(this.sensorDao.returnArray())
   }
 }

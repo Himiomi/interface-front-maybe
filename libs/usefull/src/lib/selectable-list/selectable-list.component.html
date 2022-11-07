@@ -28,17 +28,12 @@
               value="{{ item.id }}"
               (change)="isAllSelected()"
             />
-            <textarea
-              [(ngModel)]="item.comment"
-              (input)="getCheckedItemList()"
-            >{{ item.comment }}</textarea
-            >
             {{ item.value }}
           </li>
         </ul>
       </div>
       <div class="col-md-6">
-        <button (click)="onRegister()">Register</button>
+        <button (click)="onRegister()">Générer graphique</button>
         <br />
         <code>{{ checkedList }}</code>
       </div>
