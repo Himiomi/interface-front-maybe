@@ -10,16 +10,18 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { IgxCarouselModule, IgxSliderModule } from 'igniteui-angular';
 import { DetailPageComponent } from './detail-page/detail-page.component';
+import {UsefullModule} from "@interface-front/usefull";
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    IgxCarouselModule,
-    IgxSliderModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        FormsModule,
+        IgxCarouselModule,
+        IgxSliderModule,
+        UsefullModule,
+    ],
   declarations: [
     HelpComponent,
     AboutComponent,

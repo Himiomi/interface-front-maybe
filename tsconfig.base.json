@@ -18,7 +18,8 @@
       "@interface-front/different-page": ["libs/different-page/src/index.ts"],
       "@interface-front/entity": ["libs/entity/src/index.ts"],
       "@interface-front/menu": ["libs/menu/src/index.ts"],
-      "@interface-front/storage": ["libs/storage/src/index.ts"]
+      "@interface-front/storage": ["libs/storage/src/index.ts"],
+      "@interface-front/usefull": ["libs/usefull/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
