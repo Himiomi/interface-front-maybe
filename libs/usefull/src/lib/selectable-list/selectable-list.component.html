@@ -3,40 +3,51 @@
     Liste de plein de capteurs
   </h1>
 </div>
-<div class="container">
-  <div class="text-center mt-5">
-    <div class="row">
-      <div class="col-md-6">
-        <ul class="list-group">
-          <li class="list-group-item">
-            <input
-              type="checkbox"
-              [(ngModel)]="masterSelected"
-              name="list_name"
-              value="m1"
-              (change)="checkUncheckAll()"
-            />
-            <strong>Select/ Unselect All</strong>
-          </li>
-        </ul>
-        <ul class="list-group">
-          <li class="list-group-item" *ngFor="let item of checklist">
-            <input
-              type="checkbox"
-              [(ngModel)]="item.isSelected"
-              name="list_name"
-              value="{{ item.id }}"
-              (change)="isAllSelected()"
-            />
-            {{ item.value }}
-          </li>
-        </ul>
+<div class="container-mat">
+  <mat-tab-group mat-align-tabs="center" animationDuration="100ms">
+    <mat-tab label="Stations">
+      <div class="container">
+        <div class="text-center mt-5">
+          <div class="row">
+            <div class="col-md-6">
+              <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
+              <strong>Select/ Unselect All</strong>
+              <div *ngFor="let valeur of getIdCategorie()">
+                <input type="checkbox" [(ngModel)]="differentStationState[valeur]" name="list_name" value="m2" (change)="checkUncheckAllStation(valeur)"/>
+                <strong>{{getNameStation(valeur)}}</strong>
+                <p class="list-group-item" *ngFor="let item of filtreStation(valeur)">
+                  <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+                  {{ item.id }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <button (click)="onRegister()">Générer graphique</button>
-        <br />
-        <code>{{ checkedList }}</code>
+    </mat-tab>
+    <mat-tab label="Catégories">
+      <div class="container">
+        <div class="text-center mt-5">
+          <div class="row">
+            <div class="col-md-6">
+              <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
+              <strong>Select/ Unselect All</strong>
+              <div *ngFor="let valeur of getIdCategorie()">
+                <p>{{getNameType(valeur)}}</p>
+                <p class="list-group-item" *ngFor="let item of filtreType(valeur)">
+                  <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+                  {{ item.id }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    </mat-tab>>
+  </mat-tab-group>
+</div>
+<div class="col-md-6">
+  <button (click)="onRegister()">Générer graphique</button>
+  <br />
+  <code>{{ checkedList }}</code>
 </div>
