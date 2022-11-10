@@ -12,13 +12,16 @@
             <div class="col-md-6">
               <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
               <strong>Select/ Unselect All</strong>
-              <div *ngFor="let valeur of getIdCategorie()">
+
+              <div *ngFor="let valeur of getIdStation()">
                 <input type="checkbox" [(ngModel)]="differentStationState[valeur]" name="list_name" value="m2" (change)="checkUncheckAllStation(valeur)"/>
                 <strong>{{getNameStation(valeur)}}</strong>
+
                 <p class="list-group-item" *ngFor="let item of filtreStation(valeur)">
-                  <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+                  <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected(valeur)"/>
                   {{ item.id }}
                 </p>
+
               </div>
             </div>
           </div>
@@ -32,13 +35,17 @@
             <div class="col-md-6">
               <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
               <strong>Select/ Unselect All</strong>
+
               <div *ngFor="let valeur of getIdCategorie()">
-                <p>{{getNameType(valeur)}}</p>
+                <input type="checkbox" [(ngModel)]="differentCategorieState[valeur]" name="list_name" value="m2" (change)="checkUncheckAllType(valeur)"/>
+                <strong>{{getNameType(valeur)}}</strong>
+
                 <p class="list-group-item" *ngFor="let item of filtreType(valeur)">
-                  <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+                  <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected(valeur)"/>
                   {{ item.id }}
                 </p>
               </div>
+
             </div>
           </div>
         </div>

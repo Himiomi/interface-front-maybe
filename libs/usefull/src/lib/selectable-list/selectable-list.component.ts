@@ -65,6 +65,8 @@ export class SelectableListComponent implements OnChanges {
       this.differentCategorie.set(uniqueCategorieId[i],false)
       this.differentCategorieState.push(false)
     }
+    console.log(uniqueStationId)
+    console.log(uniqueCategorieId)
     this.getCheckedItemList();
     }
 
@@ -74,15 +76,26 @@ export class SelectableListComponent implements OnChanges {
     for (let i = 0; i < this.checklist.length; i++) {
       this.checklist[i].isSelected = this.masterSelected;
     }
+    for (let i = 0; i < this.differentStationState.length; i++) {
+      this.differentStationState[i]=this.masterSelected
+    }
+    for (let i = 0; i < this.differentCategorieState.length; i++) {
+      this.differentCategorieState[i]=this.masterSelected
+    }
     this.getCheckedItemList();
   }
 
   // Check All Checkbox Checked
-  isAllSelected() {
+  isAllSelected(valeur:number) {
     this.masterSelected = this.checklist.every(function (item: any) {
       return item.isSelected == true;
     });
     this.getCheckedItemList();
+
+    const newlist = this.checklist.filter(current => current.value.idStation == valeur)
+    this.differentStationState[valeur]=newlist.every(function (item: any) {
+      return item.isSelected == true;
+    });
   }
 
   // Get List of Checked Items
@@ -112,16 +125,19 @@ export class SelectableListComponent implements OnChanges {
     return this.sensorTypeDao.getById(param)?.name
   }
 
-
-
   checkUncheckAllStation(param:number) {
     const newlist = this.checklist.filter(current => current.value.idStation == param)
-    console.log(newlist)
     for (let i = 0; i < newlist.length; i++) {
-      console.log(newlist[i])
-      newlist[i].isSelected = true;
+      newlist[i].isSelected = this.differentStationState[param];
     }
-    console.log(newlist)
+    this.getCheckedItemList()
+  }
+
+  checkUncheckAllType(param:number){
+    const newlist = this.checklist.filter(current => current.value.idType == param)
+    for (let i = 0; i < newlist.length; i++) {
+      newlist[i].isSelected = this.differentCategorieState[param];
+    }
     this.getCheckedItemList()
   }
 

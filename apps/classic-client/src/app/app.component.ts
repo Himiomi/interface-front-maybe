@@ -22,6 +22,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.sensorTypeDao.add(new SensorType(1,"température","°C"))
     this.sensorTypeDao.add(new SensorType(2,"Luminosité","lux"))
+    this.sensorTypeDao.add(new SensorType(3,"Humidité","%"))
 
     this.stationDao.add(new Station(1,"Carottes"))
     this.stationDao.add(new Station(2,"Entrée"))
