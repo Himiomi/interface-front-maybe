@@ -28,4 +28,8 @@ export class SensorDao {
     return SensorDao.SensorList.map(sensor => sensor.id)
   }
 
+  public size():number{
+    return SensorDao.SensorList.length
+  }
+
 }

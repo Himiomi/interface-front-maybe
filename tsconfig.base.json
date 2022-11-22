@@ -17,7 +17,10 @@
     "paths": {
       "@interface-front/different-page": ["libs/different-page/src/index.ts"],
       "@interface-front/entity": ["libs/entity/src/index.ts"],
+      "@interface-front/graphics": ["libs/graphics/src/index.ts"],
       "@interface-front/menu": ["libs/menu/src/index.ts"],
+      "@interface-front/networking": ["libs/networking/src/index.ts"],
+      "@interface-front/notification": ["libs/notification/src/index.ts"],
       "@interface-front/storage": ["libs/storage/src/index.ts"],
       "@interface-front/usefull": ["libs/usefull/src/index.ts"]
     }

@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {GenericData, Sensor} from "@interface-front/entity";
 import {SensorDao, SensorTypeDao, StationDao} from "@interface-front/storage";
+import {NavigationExtras, Router} from "@angular/router";
 
 
 class elementOfList{
@@ -36,7 +37,7 @@ export class SelectableListComponent implements OnChanges {
   differentStationState:boolean[]=[]
   differentCategorieState:boolean[]=[]
 
-  constructor(private sensorTypeDao:SensorTypeDao,private stationDao:StationDao) {
+  constructor(private sensorTypeDao:SensorTypeDao,private stationDao:StationDao,private router:Router) {
     this.masterSelected = false;
   }
 
@@ -55,12 +56,12 @@ export class SelectableListComponent implements OnChanges {
         )
       }
     }
-    const uniqueStationId = [...new Set(this.listObject.map((current) => current.idStation))]
+    const uniqueStationId = [...new Set(this.listObject.map((current) => current.stationId))]
     for (let i = 0; i < uniqueStationId.length; i++) {
       this.differentStation.set(uniqueStationId[i],false)
       this.differentStationState.push(false)
     }
-    const uniqueCategorieId = [...new Set(this.listObject.map((current) => current.idType))]
+    const uniqueCategorieId = [...new Set(this.listObject.map((current) => current.type))]
     for (let i = 0; i < uniqueCategorieId.length; i++) {
       this.differentCategorie.set(uniqueCategorieId[i],false)
       this.differentCategorieState.push(false)
@@ -92,7 +93,7 @@ export class SelectableListComponent implements OnChanges {
     });
     this.getCheckedItemList();
 
-    const newlist = this.checklist.filter(current => current.value.idStation == valeur)
+    const newlist = this.checklist.filter(current => current.value.stationId == valeur)
     this.differentStationState[valeur]=newlist.every(function (item: any) {
       return item.isSelected == true;
     });
@@ -108,13 +109,16 @@ export class SelectableListComponent implements OnChanges {
     this.checkedList = JSON.stringify(this.checkedList);
   }
   onRegister(){
-    alert("graphique des capteurs numéros "+this.checklist.filter(current=>current.isSelected).map(current2=>current2.id))
+    const queryParams: any = {};
+    queryParams.myArray = JSON.stringify(this.checklist.filter(current=>current.isSelected).map(current2=>current2.id));
+    const navigationExtras: NavigationExtras = {queryParams};
+    this.router.navigate(['/graphe'], navigationExtras);
   }
   filtreStation(param:number){
-    return this.checklist.filter(current => current.value.idStation==param)
+    return this.checklist.filter(current => current.value.stationId==param)
   }
   filtreType(param:number){
-    return this.checklist.filter(current => current.value.idType==param)
+    return this.checklist.filter(current => current.value.type==param)
   }
 
   getNameStation(param:number){
@@ -126,7 +130,7 @@ export class SelectableListComponent implements OnChanges {
   }
 
   checkUncheckAllStation(param:number) {
-    const newlist = this.checklist.filter(current => current.value.idStation == param)
+    const newlist = this.checklist.filter(current => current.value.stationId == param)
     for (let i = 0; i < newlist.length; i++) {
       newlist[i].isSelected = this.differentStationState[param];
     }
@@ -134,25 +138,21 @@ export class SelectableListComponent implements OnChanges {
   }
 
   checkUncheckAllType(param:number){
-    const newlist = this.checklist.filter(current => current.value.idType == param)
+    const newlist = this.checklist.filter(current => current.value.type == param)
     for (let i = 0; i < newlist.length; i++) {
       newlist[i].isSelected = this.differentCategorieState[param];
     }
     this.getCheckedItemList()
   }
 
-  selectAllOneStation(param:number){
-
-  }
-
   getIdStation(){
-    let newlist:number[]=[]
+    const newlist:number[]=[]
     this.differentStation.forEach((value,index)=>{newlist.push(index)})
     return newlist
   }
 
   getIdCategorie(){
-    let newlist:number[]=[]
+    const newlist:number[]=[]
     this.differentCategorie.forEach((value,index)=>{newlist.push(index)})
     return newlist
   }

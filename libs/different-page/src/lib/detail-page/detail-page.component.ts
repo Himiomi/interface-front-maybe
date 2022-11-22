@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Sensor, SensorType, Station} from "@interface-front/entity";
-import {SensorDao, SensorTypeDao, StationDao} from "@interface-front/storage";
+import {JokeDao, SensorDao, SensorTypeDao, StationDao} from "@interface-front/storage";
+import {ApiService} from "@interface-front/networking";
+import {SnackBarService} from "@interface-front/notification";
 
 @Component({
   selector: 'interface-front-detail-page',
@@ -18,7 +20,9 @@ export class DetailPageComponent implements OnInit {
   constructor(private route:ActivatedRoute,
               private sensorDao:SensorDao,
               private stationDao:StationDao,
-              private sensorTypeDao:SensorTypeDao){
+              private sensorTypeDao:SensorTypeDao,
+              private jokeDao:JokeDao,
+              private apiservice:ApiService){
   }
 
 
@@ -34,4 +38,14 @@ export class DetailPageComponent implements OnInit {
     this.listStation=this.stationDao.returnArray()
     this.listStationType=this.sensorTypeDao.returnArray()
   }
+
+  testApi(){
+    this.apiservice.getNewJoke();
+  }
+
+  readAll() {
+    console.log(this.jokeDao.returnArray())
+  }
+
+
 }

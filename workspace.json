@@ -6,7 +6,10 @@
     "classic-client-e2e": "apps/classic-client-e2e",
     "different-page": "libs/different-page",
     "entity": "libs/entity",
+    "graphics": "libs/graphics",
     "menu": "libs/menu",
+    "networking": "libs/networking",
+    "notification": "libs/notification",
     "storage": "libs/storage",
     "usefull": "libs/usefull"
   }

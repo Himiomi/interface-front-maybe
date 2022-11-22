@@ -13,6 +13,8 @@ import {
   SettingsComponent
 } from "@interface-front/different-page";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {HttpClientModule} from "@angular/common/http";
+import {ChartsComponent} from "@interface-front/graphics";
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -20,6 +22,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     BrowserModule,
     RouterOutlet,
     MenuModule,
+    HttpClientModule,
     RouterModule.forRoot(
       [
         {path: 'help',    component: HelpComponent},
@@ -27,7 +30,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
         {path: 'about',   component: AboutComponent},
         {path: 'setting', component: SettingsComponent},
         {path: 'home',    component: HomeComponent},
-        {path: 'detail', component: DetailPageComponent }
+        {path: 'detail', component: DetailPageComponent },
+        {path: 'graphe', component: ChartsComponent }
       ]),
     MatToolbarModule,
   ],
