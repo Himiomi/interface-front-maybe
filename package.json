@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
-    "start": "nx serve classic-client --host=0.0.0.0",
+    "start": "nx serve classic-client --host=0.0.0.0 --ssl",
     "build": "nx build",
     "test": "nx test"
   },
@@ -27,6 +27,7 @@
     "igniteui-angular-core": "^14.2.0",
     "keen-slider": "^6.8.3",
     "ng-apexcharts": "^1.7.4",
+    "ng-push": "^0.2.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

@@ -4,6 +4,7 @@ import {Sensor, SensorType, SensorValue, Station} from "@interface-front/entity"
 import {StationDao} from "@interface-front/storage";
 import {SensorValueDao} from "@interface-front/storage";
 import {randomInt} from "crypto";
+import { PushNotificationsService } from 'ng-push';
 
 @Component({
   selector: 'interface-front-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit{
   private sensorTypeDao:SensorTypeDao
   private sensorValueDao:SensorValueDao
 
-  constructor(sensorDao:SensorDao,stationDao:StationDao,sensorTypeDao:SensorTypeDao,sensorValueDao:SensorValueDao) {
+  constructor(private _pushNotifications: PushNotificationsService,sensorDao:SensorDao,stationDao:StationDao,sensorTypeDao:SensorTypeDao,sensorValueDao:SensorValueDao) {
     this.stationDao=stationDao
     this.sensorTypeDao=sensorTypeDao
     this.sensorDao=sensorDao
@@ -25,6 +26,9 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+
+
+
     this.sensorTypeDao.add(new SensorType(1,"température","°C"))
     this.sensorTypeDao.add(new SensorType(2,"Luminosité","lux"))
     this.sensorTypeDao.add(new SensorType(3,"Humidité","%"))

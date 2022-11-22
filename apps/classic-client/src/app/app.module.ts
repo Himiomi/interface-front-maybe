@@ -15,6 +15,7 @@ import {
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import {ChartsComponent} from "@interface-front/graphics";
+import {PushNotificationsModule, PushNotificationsService} from "ng-push";
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -35,7 +36,7 @@ import {ChartsComponent} from "@interface-front/graphics";
       ]),
     MatToolbarModule,
   ],
-  providers: [],
+  providers: [PushNotificationsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
