@@ -54,7 +54,12 @@
   </mat-tab-group>
 </div>
 <div class="col-md-6">
+  <br/>
+  <strong>Vous avez selectionné les capteurs suivants: </strong>  <code>{{ checkedList }}    </code>
   <button (click)="onRegister()">Générer graphique</button>
-  <br />
-  <code>{{ checkedList }}</code>
+</div>
+<div class="col-md-6">
+  <interface-front-statistiques>
+
+  </interface-front-statistiques>
 </div>

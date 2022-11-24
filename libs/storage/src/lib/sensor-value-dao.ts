@@ -32,4 +32,32 @@ export class SensorValueDao {
     return SensorValueDao.SensorList.map(sensor => sensor.id)
   }
 
+  public getLastData(){
+    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorId))];
+    const listLastData =[]
+    const maxDate = (dates: Date[]) => new Date(Math.max(...dates.map(Number)));
+    for (const number of unique) {
+      listLastData.push(
+        SensorValueDao.SensorList
+          .filter(finder=>finder.sensorId==number).reduce(
+            function(prev, current) {
+               return (prev.captureData > current.captureData) ? prev : current
+            }
+      ))
+    }
+    return listLastData
+  }
+
+  public getAvg():Array<number>{
+    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorId))];
+    const listLastData =[]
+    for (const number of unique) {
+      listLastData.push(
+        SensorValueDao.SensorList.filter(current=>current.sensorId==number).map(target=>target.value).reduce( ( p, c ) => p + c, 0 )/SensorValueDao.SensorList.length
+      )
+    }
+    return listLastData
+  }
+
+
 }

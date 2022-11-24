@@ -6,8 +6,5 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./help.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HelpComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class HelpComponent {
 }

@@ -1,10 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {SensorDao, SensorTypeDao} from "@interface-front/storage";
 import {Sensor, SensorType, SensorValue, Station} from "@interface-front/entity";
 import {StationDao} from "@interface-front/storage";
 import {SensorValueDao} from "@interface-front/storage";
-import {randomInt} from "crypto";
-import { PushNotificationsService } from 'ng-push';
 
 @Component({
   selector: 'interface-front-root',
@@ -18,7 +16,7 @@ export class AppComponent implements OnInit{
   private sensorTypeDao:SensorTypeDao
   private sensorValueDao:SensorValueDao
 
-  constructor(private _pushNotifications: PushNotificationsService,sensorDao:SensorDao,stationDao:StationDao,sensorTypeDao:SensorTypeDao,sensorValueDao:SensorValueDao) {
+  constructor(sensorDao:SensorDao,stationDao:StationDao,sensorTypeDao:SensorTypeDao,sensorValueDao:SensorValueDao) {
     this.stationDao=stationDao
     this.sensorTypeDao=sensorTypeDao
     this.sensorDao=sensorDao
@@ -49,7 +47,6 @@ export class AppComponent implements OnInit{
     for(let i=1;i<this.sensorDao.size();i++){
       let val = 0;
       for (let j = 0; j < 100; j++) {
-        console.log((new Date(Date.now()+j*(60*60*2*100))).getTime())
         this.sensorValueDao.add(new SensorValue(num,i,val,new Date(Date.now()+j*(60*60*2*100))))
         val+=Math.random()*30-15;
         num++

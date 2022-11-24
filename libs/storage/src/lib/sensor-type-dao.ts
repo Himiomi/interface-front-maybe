@@ -18,7 +18,6 @@ export class SensorTypeDao {
   }
 
   public returnArray(){
-    console.log(SensorTypeDao.SensorList)
     return SensorTypeDao.SensorList
   }
 

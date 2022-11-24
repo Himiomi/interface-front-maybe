@@ -13,6 +13,7 @@ import {
 } from "ng-apexcharts";
 import {dataSeries} from "./dataSeries";
 import {ActivatedRoute} from "@angular/router";
+import {formatDate} from "@angular/common";
 
 
 @Component({
@@ -131,7 +132,7 @@ export class ChartsComponent {
       shared: false,
       x:{
         formatter: function(val) {
-          return new Date(val).toString() ;
+          return formatDate(new Date(val),'hh:mm:ss dd/MM/yyyy','en-US')
         }
       },
       y: [

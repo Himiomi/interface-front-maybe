@@ -15,7 +15,7 @@ import {
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {HttpClientModule} from "@angular/common/http";
 import {ChartsComponent} from "@interface-front/graphics";
-import {PushNotificationsModule, PushNotificationsService} from "ng-push";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -26,17 +26,18 @@ import {PushNotificationsModule, PushNotificationsService} from "ng-push";
     HttpClientModule,
     RouterModule.forRoot(
       [
-        {path: 'help',    component: HelpComponent},
+        {path: 'help', component: HelpComponent},
         {path: 'account', component: AccountComponent},
-        {path: 'about',   component: AboutComponent},
+        {path: 'about', component: AboutComponent},
         {path: 'setting', component: SettingsComponent},
-        {path: 'home',    component: HomeComponent},
-        {path: 'detail', component: DetailPageComponent },
-        {path: 'graphe', component: ChartsComponent }
+        {path: 'home', component: DetailPageComponent},
+        {path: 'detail', component: DetailPageComponent},
+        {path: 'graphe', component: ChartsComponent}
       ]),
     MatToolbarModule,
+    ScrollingModule,
   ],
-  providers: [PushNotificationsService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,4 +1,6 @@
 import {GenericData} from "@interface-front/entity";
+import {DatePipe, formatDate} from "@angular/common";
+import {Inject} from "@angular/core";
 
 export class SensorValue extends GenericData{
   get value(): number {
@@ -6,6 +8,11 @@ export class SensorValue extends GenericData{
   }
   get captureData():Date{
     return this._captureData;
+  }
+  public formatedDate(){
+    const format = 'hh:mm:ss dd/MM/yyyy';
+    const locale = 'en-US';
+    return formatDate(this.captureData,format,locale)
   }
   get sensorId():number{
     return this._sensorId;

@@ -66,8 +66,6 @@ export class SelectableListComponent implements OnChanges {
       this.differentCategorie.set(uniqueCategorieId[i],false)
       this.differentCategorieState.push(false)
     }
-    console.log(uniqueStationId)
-    console.log(uniqueCategorieId)
     this.getCheckedItemList();
     }
 
