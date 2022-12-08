@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-front/storage";
-import {SensorValue} from "@interface-front/entity";
+import {SensorValue, SortableElements} from "@interface-front/entity";
 import {Sort} from '@angular/material/sort';
 import { ViewportScroller } from '@angular/common';
 
@@ -13,16 +13,14 @@ import { ViewportScroller } from '@angular/common';
 export class StatistiquesComponent {
 
   differentDao=["SensorDao","StationDao","SensorTypeDao","SensorValueDao"]
-  lastData:Array<SensorValue>
-  listAvg:Array<number>
+  lastData:Array<SortableElements>
 
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
               private sensorTypeDao:SensorTypeDao,
               private sensorValueDao:SensorValueDao,
               private scroller: ViewportScroller) {
-    this.lastData=this.sensorValueDao.getLastData()
-    this.listAvg=this.sensorValueDao.getAvg()
+    this.lastData=this.sensorValueDao.getAllData()
   }
 
 
@@ -33,15 +31,19 @@ export class StatistiquesComponent {
       return;
     }
 
-    this.lastData = data.sort((a:SensorValue, b:SensorValue) => {
+    this.lastData = data.sort((a:SortableElements, b:SortableElements) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'numero':
-          return compare(a.sensorId, b.sensorId, isAsc);
+          return compare(a.numeroCapteur, b.numeroCapteur, isAsc);
         case 'valeur':
-          return compare(a.value, b.value, isAsc);
+          return compare(a.valeur, b.valeur, isAsc);
         case 'date':
-          return compare(a.captureData.getTime(), b.captureData.getTime(), isAsc);
+          return compare(a.dateDeCapture, b.dateDeCapture, isAsc);
+        case 'avg':
+          return compare(a.avg, b.avg, isAsc);
+        case 'size':
+          return compare(a.numberElements, b.numberElements, isAsc);
         default:
           return 0;
       }

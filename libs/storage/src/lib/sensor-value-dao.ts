@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Sensor, SensorValue} from "@interface-front/entity";
+import {Sensor, SensorValue, SortableElements} from "@interface-front/entity";
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +59,36 @@ export class SensorValueDao {
     return listLastData
   }
 
+  public numberOfCaptur():Array<number>{
+    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorId))];
+    const listLastData =[]
+    for (const number of unique) {
+      listLastData.push(
+        SensorValueDao.SensorList.filter(current=>current.sensorId==number).length
+      )
+    }
+    return listLastData
+  }
+
+  public getAllData():Array<SortableElements>{
+    const lastData = this.getLastData()
+    const avg=this.getAvg()
+    const size=this.numberOfCaptur()
+    const finalArray:Array<SortableElements>=new Array<SortableElements>()
+    let currentElement;
+    for (let i = 0; i < lastData.length; i++) {
+      currentElement = lastData[i]
+      finalArray.push(
+        new SortableElements(
+          currentElement.sensorId,
+          currentElement.value,
+          currentElement.formatedDate(),
+          avg[i],
+          size[i]
+        )
+      )
+    }
+    return finalArray;
+  }
 
 }
