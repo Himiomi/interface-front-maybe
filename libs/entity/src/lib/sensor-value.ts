@@ -1,4 +1,4 @@
-import {GenericData} from "@interface-front/entity";
+import {GenericData} from "./generic-data";
 import {DatePipe, formatDate} from "@angular/common";
 import {Inject} from "@angular/core";
 

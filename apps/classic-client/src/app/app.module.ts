@@ -32,7 +32,9 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
         {path: 'setting', component: SettingsComponent},
         {path: 'home', component: DetailPageComponent},
         {path: 'detail', component: DetailPageComponent},
-        {path: 'graphe', component: ChartsComponent}
+        {path: 'graphe', component: ChartsComponent},
+        {path: '', redirectTo: '/home', pathMatch: 'full' },
+        {path: '**', redirectTo: '/home', pathMatch: 'full' }
       ]),
     MatToolbarModule,
     ScrollingModule,
