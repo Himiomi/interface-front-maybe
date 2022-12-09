@@ -1,17 +1,25 @@
-<div class="menu">
-  <interface-front-button [sidenav]="sidenav"></interface-front-button>
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav="" class="mat-elevation-z8">
-      <mat-divider></mat-divider>
-      <interface-front-button-choice [buttonList]="buttonList">
-      </interface-front-button-choice>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="content mat-elevation-z8">
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">
+    <button
+        mat-button
+        [matMenuTriggerFor]="languageMenu">
+      Menu
+      <mat-icon>expand_more</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <span>
+        <mat-menu #languageMenu="matMenu">
+          <div *ngFor="let element of buttonList">
+            <button (click)="toPage(element.link)" mat-menu-item>
+              {{element.name}}
+            </button>
+          </div>
+        </mat-menu>
+      </span>
+    </mat-menu>
+  </span>
+  <span class="fill-remaining-space">Application Title</span>
+</mat-toolbar>
 
 <div class="elementOfPage">
   <router-outlet></router-outlet>

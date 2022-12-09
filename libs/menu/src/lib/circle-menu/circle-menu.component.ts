@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {BoutonCircleMenu} from "../bouton-circle-menu";
-import {SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-front/storage";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'interface-front-circle-menu',
@@ -11,12 +11,10 @@ import {SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-f
 export class CircleMenuComponent implements OnInit {
   buttonList: BoutonCircleMenu[] = [];
 
-  constructor(private sensorDao:SensorDao,private stationDao:StationDao,private sensorTypeDao:SensorTypeDao,private sensorValueDao:SensorValueDao) {
-    this.stationDao=stationDao
-    this.sensorTypeDao=sensorTypeDao
-    this.sensorDao=sensorDao
-    this.sensorValueDao=sensorValueDao
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router  ) {}
+
   ngOnInit(): void {
     this.buttonList.push(
       new BoutonCircleMenu('/home', 'Acceuil'),
@@ -27,14 +25,7 @@ export class CircleMenuComponent implements OnInit {
     );
   }
 
-  displayAllDao() {
-    console.log("Sensors :")
-    console.log(this.sensorDao.returnArray())
-    console.log("Stations :")
-    console.log(this.stationDao.returnArray())
-    console.log("Types :")
-    console.log(this.sensorTypeDao.returnArray())
-    console.log("SensorValue :")
-    console.log(this.sensorValueDao.returnArrayOfSensor(1))
+  toPage(param: String) {
+    this.router.navigate([param]);
   }
 }
