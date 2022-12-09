@@ -1,1 +1,12 @@
-<p>Surement une page FAQ ou alors avec des vidéos pour expliquer comment fonctionne concretement la page</p>
+<mat-accordion>
+  <mat-expansion-panel hideToggle *ngFor="let element of listElements">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{element.titre}}
+      </mat-panel-title>
+      <mat-panel-description>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>{{element.content}}</p>
+  </mat-expansion-panel>
+</mat-accordion>

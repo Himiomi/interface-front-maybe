@@ -11,18 +11,28 @@ import { IgxCarouselModule, IgxSliderModule } from 'igniteui-angular';
 import { DetailPageComponent } from './detail-page/detail-page.component';
 import {UsefullModule} from "@interface-front/usefull";
 import {HttpClientModule} from "@angular/common/http";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatIconModule} from "@angular/material/icon";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {BrowserModule} from "@angular/platform-browser";
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule,
-        FormsModule,
-        IgxCarouselModule,
-        IgxSliderModule,
-        UsefullModule,
-      HttpClientModule
-    ],
+  imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    IgxCarouselModule,
+    IgxSliderModule,
+    UsefullModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatIconModule
+  ],
   declarations: [
     HelpComponent,
     AboutComponent,
@@ -38,6 +48,9 @@ import {HttpClientModule} from "@angular/common/http";
     AccountComponent,
     HomeComponent,
     DetailPageComponent,
+  ],
+  bootstrap:[
+    HelpComponent
   ]
 })
 export class DifferentPageModule {}
