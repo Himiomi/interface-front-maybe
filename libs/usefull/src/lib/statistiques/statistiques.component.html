@@ -1,20 +1,22 @@
 <p>Ensemble des statistiques:</p>
-<div class="boxer">
-  <p>Liste des derniers relevés:</p>
-  <table matSort (matSortChange)="sortData($event)">
-    <tr>
-      <th mat-sort-header="numero">numero du capteur</th>
-      <th mat-sort-header="valeur">valeur</th>
-      <th mat-sort-header="date">date de capture</th>
-      <th mat-sort-header="avg">moyenne</th>
-      <th mat-sort-header="size">nombre de relevés</th>
-    </tr>
-    <tr *ngFor="let data of lastData">
-      <td>{{data.numeroCapteur}}</td>
-      <td>{{data.valeur}}</td>
-      <td>{{data.dateDeCapture}}</td>
-      <td>{{data.avg}}</td>
-      <td>{{data.numberElements}}</td>
-    </tr>
-  </table>
+<div class="scrollable_boxer">
+  <div class="boxer">
+    <p>Liste des derniers relevés:</p>
+    <table matSort (matSortChange)="sortData($event)">
+      <tr>
+        <th mat-sort-header="numero">numero du capteur</th>
+        <th mat-sort-header="valeur">valeur</th>
+        <th mat-sort-header="date">date de capture</th>
+        <th mat-sort-header="avg">moyenne</th>
+        <th mat-sort-header="size">nombre de relevés</th>
+      </tr>
+      <tr *ngFor="let data of lastData">
+        <td>{{data.numeroCapteur}}</td>
+        <td>{{data.valeur}}</td>
+        <td>{{data.dateDeCapture}}</td>
+        <td>{{data.avg}}</td>
+        <td>{{data.numberElements}}</td>
+      </tr>
+    </table>
+  </div>
 </div>

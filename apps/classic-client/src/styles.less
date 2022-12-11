@@ -55,6 +55,10 @@ mat-sidenav-container {
   width: calc(125px);
 }
 
+.container-mat{
+  width: fit-content;
+}
+
 .menu-button {
   width: 100%;
   display: flex;
@@ -106,4 +110,26 @@ h2{
 
 .boxer{
   border: black solid 3px;
+  overflow-x: auto;
+  width:max-content;
+}
+
+@media(max-width: 600px) {
+
+  table.mat-sort {
+    width: max-content;
+  }
+
+  .boxer {
+    border: black solid 3px;
+    overflow: auto;
+    width: auto;
+  }
+
+  .scrollable_boxer {
+    width: 100%;
+  }
+  .container-mat{
+    width: auto;
+  }
 }

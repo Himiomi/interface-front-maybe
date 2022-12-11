@@ -29,8 +29,9 @@ export class HelpComponent {
   listElements:Array<elementAccordion>=new Array<elementAccordion>();
   constructor() {
     this.listElements.push(
-      new elementAccordion("Un super titre","du contenu"),
-      new elementAccordion("2eme titre","et encore du contenu")
+      new elementAccordion("Qu'est ce qu'est Freyr ?","Freyr est un projet développé par un groupe d'étudiant de 5ème année à l'ESIEA permettant de gérer une serre connectée"),
+      new elementAccordion("Comment utiliser le site ?","En tant qu'utilisateur, une page vous intéresse vraiment c'est l'accueil, vous pourrez selectionner les capteurs qui vous intéresse et construire un graphique avec eux"),
+      new elementAccordion("Quels sont les fonctionnalités du projet ?","Pour l'instant ce projet permet uniquement de visualiser les données issues de capteurs ajoutés au projet")
     )
   }
 }

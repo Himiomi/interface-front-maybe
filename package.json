@@ -12,6 +12,7 @@
     "test": "nx test",
     "reset": "nx reset",
     "sync-android": "npx cap sync",
+    "open-android": "npx cap open android",
     "electron": "electron main.js"
   },
   "private": true,
