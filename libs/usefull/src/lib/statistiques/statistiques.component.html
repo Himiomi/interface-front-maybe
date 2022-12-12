@@ -1,6 +1,7 @@
-<p>Ensemble des statistiques:</p>
+<p>Liste des capteurs selectionnables :</p>
+
 <div class="scrollable_boxer">
-  <div class="boxer">
+<!--  <div class="boxer">
     <p>Liste des derniers relevés:</p>
     <table matSort (matSortChange)="sortData($event)">
       <tr>
@@ -19,4 +20,74 @@
       </tr>
     </table>
   </div>
+-->
+  <table mat-table [dataSource]="dataSource"
+         matSort (matSortChange)="announceSortChange($event)"
+         class="mat-elevation-z8">
+
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)='toggleAllRows()'
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)='onChange(element)'
+                      [checked]="selection.isSelected(element)"
+                      [aria-label]="checkboxLabel(element)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="numeroCapteur">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+        No.
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.numeroCapteur}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="valeur">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by valeur">
+        valeur
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.valeur}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="dateDeCapture">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dateDeCapture">
+        dateDeCapture
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.dateDeCapture}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="avg">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by avg">
+        avg
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.avg}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="numberElements">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by numberElements">
+        numberElements
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.numberElements}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>
+
+<p>Les elements sont: {{listElement.toString()}}</p>
+<button (click)="onRegister()">Générer graphique</button>
+

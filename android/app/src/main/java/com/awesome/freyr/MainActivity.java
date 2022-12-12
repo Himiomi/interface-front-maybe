@@ -1,4 +1,4 @@
-package com.freyr;
+package com.awesome.freyr;
 
 import com.getcapacitor.BridgeActivity;
 

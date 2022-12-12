@@ -8,9 +8,9 @@
     "start": "nx serve classic-client",
     "start-autohost": "nx serve classic-client --host 0.0.0.0",
     "build": "nx build",
-    "build prod": "nx build --prod",
     "test": "nx test",
     "reset": "nx reset",
+    "build prod": "nx build --prod",
     "sync-android": "npx cap sync",
     "open-android": "npx cap open android",
     "electron": "electron main.js"
