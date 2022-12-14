@@ -7,9 +7,10 @@ import { StatistiquesComponent } from './statistiques/statistiques.component';
 import {MatSortModule} from "@angular/material/sort";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatTableModule} from "@angular/material/table";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
-  imports: [CommonModule, FormsModule, MatTabsModule, MatSortModule, MatCheckboxModule, MatTableModule],
+    imports: [CommonModule, FormsModule, MatTabsModule, MatSortModule, MatCheckboxModule, MatTableModule, MatButtonModule],
   declarations: [SelectableListComponent, StatistiquesComponent],
   exports: [SelectableListComponent, StatistiquesComponent],
 })
