@@ -1,24 +1,50 @@
 <mat-toolbar color="primary">
   <span class="fill-remaining-space">
-    <button
+    <div *ngIf="isMobile">
+      <button
         mat-button
         [matMenuTriggerFor]="languageMenu">
-      Menu
-      <mat-icon>expand_more</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" [overlapTrigger]="false">
-      <span>
-        <mat-menu #languageMenu="matMenu">
-          <div *ngFor="let element of buttonList">
-            <button (click)="toPage(element.link)" mat-menu-item>
-              {{element.name}}
-            </button>
-          </div>
-        </mat-menu>
-      </span>
-    </mat-menu>
+        Menu
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" [overlapTrigger]="false">
+        <span>
+          <mat-menu #languageMenu="matMenu">
+            <div *ngFor="let element of buttonList;let last = last">
+              <div *ngIf="last">
+                <a (click)="toPage(element.link)" mat-raised-button color="accent">
+                  {{element.name}}
+                </a>
+              </div>
+              <div *ngIf="!last">
+                <a (click)="toPage(element.link)" mat-button>
+                  {{element.name}}
+                </a>
+              </div>
+            </div>
+          </mat-menu>
+        </span>
+      </mat-menu>
+    </div>
   </span>
-  <span class="fill-remaining-space">Application Title</span>
+  <span class="fill-remaining-space">
+    <mat-icon>eco</mat-icon>
+    GreenGardenGuys 3G
+  </span>
+  <div class="menuDroite" *ngIf="!isMobile">
+    <div *ngFor="let element of buttonList;let last = last">
+      <div *ngIf="last">
+        <a (click)="toPage(element.link)" mat-raised-button color="accent">
+          {{element.name}}
+        </a>
+      </div>
+      <div *ngIf="!last">
+        <a (click)="toPage(element.link)" mat-button>
+          {{element.name}}
+        </a>
+      </div>
+    </div>
+  </div>
 </mat-toolbar>
 
 <div class="elementOfPage">

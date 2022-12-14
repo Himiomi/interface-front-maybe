@@ -3,6 +3,7 @@ import {SensorDao, SensorTypeDao} from "@interface-front/storage";
 import {Sensor, SensorType, SensorValue, Station} from "@interface-front/entity";
 import {StationDao} from "@interface-front/storage";
 import {SensorValueDao} from "@interface-front/storage";
+import {ApiService} from "@interface-front/networking";
 
 @Component({
   selector: 'interface-front-root',
@@ -11,22 +12,23 @@ import {SensorValueDao} from "@interface-front/storage";
 })
 export class AppComponent implements OnInit{
   title = 'classic-client';
-  private sensorDao: SensorDao;
-  private stationDao:StationDao
-  private sensorTypeDao:SensorTypeDao
-  private sensorValueDao:SensorValueDao
 
-  constructor(sensorDao:SensorDao,stationDao:StationDao,sensorTypeDao:SensorTypeDao,sensorValueDao:SensorValueDao) {
-    this.stationDao=stationDao
-    this.sensorTypeDao=sensorTypeDao
-    this.sensorDao=sensorDao
-    this.sensorValueDao=sensorValueDao
+  constructor(
+    private sensorDao:SensorDao,
+    private stationDao:StationDao,
+    private sensorTypeDao:SensorTypeDao,
+    private sensorValueDao:SensorValueDao,
+    private apiService:ApiService
+  ) {
   }
 
   ngOnInit(): void {
+    this.apiService.getAllSensor()
+    this.apiService.getAllReading()
+    //this.createValue()
+  }
 
-
-
+  createValue(){
     this.sensorTypeDao.add(new SensorType(1,"température","°C"))
     this.sensorTypeDao.add(new SensorType(2,"Luminosité","lux"))
     this.sensorTypeDao.add(new SensorType(3,"Humidité","%"))
@@ -46,15 +48,13 @@ export class AppComponent implements OnInit{
     let num = 0;
     for(let i=1;i<this.sensorDao.size();i++){
       let val = 0;
-      for (let j = 0; j < 100; j++) {
-        this.sensorValueDao.add(new SensorValue(num,i,val,new Date(Date.now()+j*(60*60*2*100))))
+      let moment=Date.now()
+      for (let j = 0; j < 300+Math.random()*50; j++) {
+        moment+=((60*60*2*100)+Math.random()*30)
+        this.sensorValueDao.add(new SensorValue(num,i,val,new Date(moment),0,"none"))
         val+=Math.random()*30-15;
         num++
       }
     }
-
   }
-
-
-
 }

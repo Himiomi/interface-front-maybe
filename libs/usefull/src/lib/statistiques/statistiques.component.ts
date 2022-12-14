@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-front/storage";
 import {SensorValue, SortableElements} from "@interface-front/entity";
 import {MatSort, Sort} from '@angular/material/sort';
@@ -7,6 +7,16 @@ import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from '@angular/cdk/collections';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {NavigationExtras, Router} from "@angular/router";
+import {ApiService} from "@interface-front/networking";
+import { FormControl } from '@angular/forms';
+
+
+declare global {
+  interface Navigator {
+    msSaveBlob?: (blob: any, defaultName?: string) => boolean
+  }
+}
+
 
 @Component({
   selector: 'interface-front-statistiques',
@@ -14,18 +24,25 @@ import {NavigationExtras, Router} from "@angular/router";
   styleUrls: ['./statistiques.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class StatistiquesComponent {
+export class StatistiquesComponent implements OnInit,AfterViewInit{
 
   @ViewChild(MatSort) sort!: MatSort;
+  private mockHeaders="";
+  private mockCsvData="";
+
   displayedColumns: string[] = ['select','numeroCapteur', 'valeur', 'dateDeCapture', 'avg','numberElements'];
+
   dataSource = new MatTableDataSource<SortableElements>();
-
   listElement:number[]=[]
-
   differentDao=["SensorDao","StationDao","SensorTypeDao","SensorValueDao"]
   lastData:Array<SortableElements>
-  selection = new SelectionModel<SortableElements>(true, []);
+  fileTitle = 'Freyr_data';
+  selectControl = new FormControl();
 
+  selection = new SelectionModel<SortableElements>(true, []);
+  listPossibleNumber:number[]=[]
+
+  selectedValue: any;
 
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
@@ -33,11 +50,13 @@ export class StatistiquesComponent {
               private sensorValueDao:SensorValueDao,
               private scroller: ViewportScroller,
               private _liveAnnouncer: LiveAnnouncer,
-              private router:Router) {
+              private apiService:ApiService,
+              private router:Router
+  ) {
     this.lastData=this.sensorValueDao.getAllData()
     this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
     this.dataSource.sort = this.sort;
-
+    this.refreshArray()
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -47,6 +66,12 @@ export class StatistiquesComponent {
     return numSelected === numRows;
   }
 
+  ngOnInit(){
+    this.refreshArray()
+  }
+  ngAfterViewInit(){
+    this.refreshArray()
+  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -66,11 +91,6 @@ export class StatistiquesComponent {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.numeroCapteur + 1}`;
   }
 
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     // This example uses English messages. If your application supports
@@ -86,6 +106,7 @@ export class StatistiquesComponent {
 
 
   onChange(event:SortableElements){
+    this.refreshArray()
     if(this.listElement.indexOf(event.numeroCapteur)>-1) {
       this.listElement=this.listElement.filter(current=>current!=event.numeroCapteur)
     }else {
@@ -101,8 +122,61 @@ export class StatistiquesComponent {
     const navigationExtras: NavigationExtras = {queryParams};
     this.router.navigate(['/graphe'], navigationExtras);
   }
+
+  refreshArray() {
+    this.lastData=this.sensorValueDao.getAllData()
+    this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
+    this.dataSource.sort = this.sort;
+    this.listPossibleNumber=this.lastData.map(current=>current.numeroCapteur)
+  }
+  getSensor() {
+    this.apiService.getAllSensor()
+  }
+
+  getSensorValue() {
+    this.apiService.getAllReading()
+  }
+//###################################################################################
+
+  convertToCSV(items: Array<any>) {
+    if (!items.length) return '';
+    const separator=","
+    const columns = Object.keys(items[0]).join(separator);
+    const body = items.map(item =>
+      Object.values(item).join(separator)
+    ).join('\n');
+    return columns + '\n' + body;
+  }
+
+  formatToCsvData() {
+    const csv = this.convertToCSV(this.lastData);
+    this.mockCsvData =  this.mockHeaders + csv;
+  }
+
+  download(data:any){
+    this.formatToCsvData()
+    const exportedFilenmae = this.fileTitle + '.csv';
+    const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, exportedFilenmae);
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', exportedFilenmae);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  }
+
+  downloadSortableValue() {
+    this.download(this.lastData)
+  }
+
+
 }
 
-function compare(a: number | string, b: number | string, isAsc: boolean) {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-}

@@ -25,23 +25,23 @@ export class SensorValueDao {
   }
 
   public returnArrayOfSensor(id:number){
-    const filtred = SensorValueDao.SensorList.filter(current => current.sensorId === id)
-    return filtred.map(current=>([current.captureData.getTime(),current.value]))
+    const filtred = SensorValueDao.SensorList.filter(current => current.sensorsId === id)
+    return filtred.map(current=>([current.captureDate.getTime(),current.value]))
   }
   public getListId(){
     return SensorValueDao.SensorList.map(sensor => sensor.id)
   }
 
   public getLastData(){
-    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorId))];
+    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorsId))];
     const listLastData =[]
     const maxDate = (dates: Date[]) => new Date(Math.max(...dates.map(Number)));
     for (const number of unique) {
       listLastData.push(
         SensorValueDao.SensorList
-          .filter(finder=>finder.sensorId==number).reduce(
+          .filter(finder=>finder.sensorsId==number).reduce(
             function(prev, current) {
-               return (prev.captureData > current.captureData) ? prev : current
+               return (prev.captureDate > current.captureDate) ? prev : current
             }
       ))
     }
@@ -49,22 +49,22 @@ export class SensorValueDao {
   }
 
   public getAvg():Array<number>{
-    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorId))];
+    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorsId))];
     const listLastData =[]
     for (const number of unique) {
       listLastData.push(
-        SensorValueDao.SensorList.filter(current=>current.sensorId==number).map(target=>target.value).reduce( ( p, c ) => p + c, 0 )/SensorValueDao.SensorList.length
+        SensorValueDao.SensorList.filter(current=>current.sensorsId==number).map(target=>target.value).reduce( ( p, c ) => p + c, 0 )/SensorValueDao.SensorList.length
       )
     }
     return listLastData
   }
 
   public numberOfCaptur():Array<number>{
-    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorId))];
+    const unique = [...new Set(SensorValueDao.SensorList.map(current => current.sensorsId))];
     const listLastData =[]
     for (const number of unique) {
       listLastData.push(
-        SensorValueDao.SensorList.filter(current=>current.sensorId==number).length
+        SensorValueDao.SensorList.filter(current=>current.sensorsId==number).length
       )
     }
     return listLastData
@@ -80,7 +80,7 @@ export class SensorValueDao {
       currentElement = lastData[i]
       finalArray.push(
         new SortableElements(
-          currentElement.sensorId,
+          currentElement.sensorsId,
           currentElement.value,
           currentElement.formatedDate(),
           avg[i],

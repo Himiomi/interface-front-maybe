@@ -1,26 +1,6 @@
 <p>Liste des capteurs selectionnables :</p>
 
 <div class="scrollable_boxer">
-<!--  <div class="boxer">
-    <p>Liste des derniers relevés:</p>
-    <table matSort (matSortChange)="sortData($event)">
-      <tr>
-        <th mat-sort-header="numero">numero du capteur</th>
-        <th mat-sort-header="valeur">valeur</th>
-        <th mat-sort-header="date">date de capture</th>
-        <th mat-sort-header="avg">moyenne</th>
-        <th mat-sort-header="size">nombre de relevés</th>
-      </tr>
-      <tr *ngFor="let data of lastData">
-        <td>{{data.numeroCapteur}}</td>
-        <td>{{data.valeur}}</td>
-        <td>{{data.dateDeCapture}}</td>
-        <td>{{data.avg}}</td>
-        <td>{{data.numberElements}}</td>
-      </tr>
-    </table>
-  </div>
--->
   <table mat-table [dataSource]="dataSource"
          matSort (matSortChange)="announceSortChange($event)"
          class="mat-elevation-z8">
@@ -54,7 +34,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="valeur">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by valeur">
-        valeur
+        dernière valeur
       </th>
       <td mat-cell *matCellDef="let element"> {{element.valeur}} </td>
     </ng-container>
@@ -62,7 +42,7 @@
     <!-- Weight Column -->
     <ng-container matColumnDef="dateDeCapture">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by dateDeCapture">
-        dateDeCapture
+        date de la derniere capture
       </th>
       <td mat-cell *matCellDef="let element"> {{element.dateDeCapture}} </td>
     </ng-container>
@@ -70,7 +50,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="avg">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by avg">
-        avg
+        moyenne
       </th>
       <td mat-cell *matCellDef="let element"> {{element.avg}} </td>
     </ng-container>
@@ -78,7 +58,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="numberElements">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by numberElements">
-        numberElements
+        nombre d'éléments
       </th>
       <td mat-cell *matCellDef="let element"> {{element.numberElements}} </td>
     </ng-container>
@@ -88,6 +68,12 @@
   </table>
 </div>
 
-<p>Les elements sont: {{listElement.toString()}}</p>
-<button (click)="onRegister()">Générer graphique</button>
-
+<p *ngIf="listElement.length===0">Vous n'avez sélectionné aucun capteur</p>
+<p *ngIf="listElement.length!==0">Les elements sélectionnés sont: {{listElement.toString()}}</p>
+<button mat-raised-button color="primary" (click)="onRegister()">Générer le graphique</button>
+<button mat-raised-button color="primary" (click)="refreshArray()">Rafraichir le graphique</button>
+<br>
+<button mat-raised-button color="primary" (click)="getSensor()">Récupérer les capteurs</button>
+<button mat-raised-button color="primary" (click)="getSensorValue()">Récupérer les relevés</button>
+<br><br><br>
+<button mat-raised-button (click)="downloadSortableValue()">Downlad CSV</button>
