@@ -8,7 +8,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {NavigationExtras, Router} from "@angular/router";
 import {ApiService} from "@interface-front/networking";
-import { FormControl } from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 
 
 declare global {
@@ -43,6 +43,12 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   listPossibleNumber:number[]=[]
 
   selectedValue: any;
+
+
+  range = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
 
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
@@ -91,6 +97,10 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.numeroCapteur + 1}`;
   }
 
+  getSelection(){
+    return this.selection.selected.map(current=>current.numeroCapteur)
+  }
+
   /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
     // This example uses English messages. If your application supports
@@ -104,23 +114,15 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     }
   }
 
-
-  onChange(event:SortableElements){
-    this.refreshArray()
-    if(this.listElement.indexOf(event.numeroCapteur)>-1) {
-      this.listElement=this.listElement.filter(current=>current!=event.numeroCapteur)
-    }else {
-      this.listElement.push(event.numeroCapteur);
-    }
-    console.log(event.numeroCapteur);
-    console.log(this.listElement)
-  }
-
   onRegister(){
-    const queryParams: any = {};
-    queryParams.myArray = JSON.stringify(this.listElement);
-    const navigationExtras: NavigationExtras = {queryParams};
-    this.router.navigate(['/graphe'], navigationExtras);
+    this.router.navigate(['/graphe'],
+      { queryParams:
+          {
+            myArray: JSON.stringify(this.selection.selected.map(current=>current.numeroCapteur)),
+            dateStart: this.range.value.start,
+            dateEnd: this.range.value.end
+          }
+      });
   }
 
   refreshArray() {
@@ -177,6 +179,12 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     this.download(this.lastData)
   }
 
+  isSelected(num:number){
+    return this.listElement.includes(num)
+  }
 
+  debug() {
+    console.log(this.range.value.start)
+    console.log(this.range.value.end)
+  }
 }
-

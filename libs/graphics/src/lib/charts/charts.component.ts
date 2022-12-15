@@ -34,11 +34,16 @@ export class ChartsComponent {
   public tooltip: ApexTooltip;
   public listSensorId:number[]=[]
   arrayOfValues: Array<number>=[];
+  dateStart:Date=new Date();
+  dateEnd:Date=new Date();
 
   constructor(route:ActivatedRoute,sensorValueDao:SensorValueDao) {
 
     route.queryParams.subscribe( params => {
-      console.log(params['listSensorId'])
+      console.log(params['dateStart'])
+      console.log(params['dateEnd'])
+      this.dateStart=new Date(params['dateStart'])
+      this.dateEnd=new Date(params['dateEnd'])
       const myArray = route.snapshot.queryParamMap.get('myArray');
 
       // If the value is null, create a new array and store it
@@ -54,7 +59,8 @@ export class ChartsComponent {
         this.series = []
 
         for (const num of this.listSensorId) {
-          this.series.push({name: "sensor " + num, data: sensorValueDao.returnArrayOfSensor(num)})
+          console.log(sensorValueDao.returnArrayOfSensor(num,this.dateStart,this.dateEnd))
+          this.series.push({name: "sensor " + num, data: sensorValueDao.returnArrayOfSensor(num,this.dateStart,this.dateEnd)})
         }
       }
     )

@@ -24,8 +24,12 @@ export class SensorValueDao {
     return SensorValueDao.SensorList
   }
 
-  public returnArrayOfSensor(id:number){
-    const filtred = SensorValueDao.SensorList.filter(current => current.sensorsId === id)
+  public returnArrayOfSensor(id:number,dateStart:Date,dateEnd:Date){
+    console.log(SensorValueDao.SensorList.length)
+    const filtred = SensorValueDao.SensorList
+      .filter(current => current.sensorsId === id)
+      .filter(current => current.captureDate>=dateStart)
+      .filter(current => current.captureDate<=dateEnd)
     return filtred.map(current=>([current.captureDate.getTime(),current.value]))
   }
   public getListId(){
