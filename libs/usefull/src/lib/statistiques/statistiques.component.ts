@@ -1,14 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-front/storage";
-import {SensorValue, SortableElements} from "@interface-front/entity";
+import {SortableElements} from "@interface-front/entity";
 import {MatSort, Sort} from '@angular/material/sort';
-import { ViewportScroller } from '@angular/common';
+import {ViewportScroller} from '@angular/common';
 import {MatTableDataSource} from "@angular/material/table";
 import {SelectionModel} from '@angular/cdk/collections';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {NavigationExtras, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {ApiService} from "@interface-front/networking";
 import {FormControl, FormGroup} from '@angular/forms';
+import {debounceTime} from "rxjs";
 
 
 declare global {
@@ -27,34 +28,36 @@ declare global {
 export class StatistiquesComponent implements OnInit,AfterViewInit{
 
   @ViewChild(MatSort) sort!: MatSort;
+  //CSV
   private mockHeaders="";
   private mockCsvData="";
+  fileTitle = 'Freyr_data';
+
 
   displayedColumns: string[] = ['select','numeroCapteur', 'valeur', 'dateDeCapture', 'avg','numberElements'];
-
   dataSource = new MatTableDataSource<SortableElements>();
   listElement:number[]=[]
-  differentDao=["SensorDao","StationDao","SensorTypeDao","SensorValueDao"]
   lastData:Array<SortableElements>
-  fileTitle = 'Freyr_data';
-  selectNumber!: number;
+  listPossibleNumber:number[]=[]
 
-  targetNumber: any;
+  selectNumber!: number;
+  targetNumber=new FormControl();
+
   selectControl = new FormControl();
 
   selection = new SelectionModel<SortableElements>(true, []);
 
   selectComparaison: any;
 
-  listPossibleNumber:number[]=[]
-
-  selectColomn: string=this.displayedColumns[0];
+  selectColomn= new FormControl(this.displayedColumns[0]);
 
   selectedValue: any;
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
+  targetDate = new FormControl();
+
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
               private sensorTypeDao:SensorTypeDao,
@@ -68,9 +71,16 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
     this.dataSource.sort = this.sort;
     this.refreshArray()
+    this.selectColomn.valueChanges.pipe(
+      debounceTime(500),
+    ).subscribe(()=>{
+        this.selectComparaison = null;
+        this.targetNumber = new FormControl();
+      }
+    )
+
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -85,7 +95,6 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     this.refreshArray()
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
       this.listElement=[]
@@ -96,7 +105,6 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     this.selection.select(...this.dataSource.data);
   }
 
-  /** The label for the checkbox on the passed row */
   checkboxLabel(row?: SortableElements): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
@@ -107,12 +115,7 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     return this.selection.selected.map(current=>current.numeroCapteur)
   }
 
-  /** Announce the change in sort state for assistive technology. */
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -200,10 +203,42 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   }
 
   filtre() {
-    this.lastData=this.sensorValueDao.getAllData()
+ //   this.lastData=this.sensorValueDao.getAllData()
+    console.log(this.selectComparaison)
+    console.log(this.targetNumber.value)
+    console.log(this.targetDate.value)
+    if(this.selectColomn.value===this.displayedColumns[1]) {
+      if (this.selectComparaison === '<') this.lastData = this.lastData.filter(current => current.numeroCapteur < this.targetNumber.value)
+      if (this.selectComparaison === '>') this.lastData = this.lastData.filter(current => current.numeroCapteur > this.targetNumber.value)
+      if (this.selectComparaison === '=') this.lastData = this.lastData.filter(current => current.numeroCapteur == this.targetNumber.value)
+    }
+    else if(this.selectColomn.value===this.displayedColumns[2]) {
+      if (this.selectComparaison === '<') this.lastData = this.lastData.filter(current => current.valeur < this.targetNumber.value)
+      if (this.selectComparaison === '>') this.lastData = this.lastData.filter(current => current.valeur > this.targetNumber.value)
+      if (this.selectComparaison === '=') this.lastData = this.lastData.filter(current => current.valeur == this.targetNumber.value)
+    }
+    else if(this.selectColomn.value===this.displayedColumns[3]) {
+      if (this.selectComparaison === '<') this.lastData = this.lastData.filter(current => new Date(current.dateDeCapture) < this.targetDate.value)
+      if (this.selectComparaison === '>') this.lastData = this.lastData.filter(current => new Date(current.dateDeCapture) > this.targetDate.value)
+      if (this.selectComparaison === '=') this.lastData = this.lastData.filter(current => new Date(current.dateDeCapture) == this.targetDate.value)
+    }
+    else if(this.selectColomn.value===this.displayedColumns[4]) {
+      if (this.selectComparaison === '<') this.lastData = this.lastData.filter(current => current.avg < this.targetNumber.value)
+      if (this.selectComparaison === '>') this.lastData = this.lastData.filter(current => current.avg > this.targetNumber.value)
+      if (this.selectComparaison === '=') this.lastData = this.lastData.filter(current => current.avg == this.targetNumber.value)
+    }
+    else if(this.selectColomn.value===this.displayedColumns[5]) {
+      if (this.selectComparaison === '<') this.lastData = this.lastData.filter(current => current.numberElements < this.targetNumber.value)
+      if (this.selectComparaison === '>') this.lastData = this.lastData.filter(current => current.numberElements > this.targetNumber.value)
+      if (this.selectComparaison === '=') this.lastData = this.lastData.filter(current => current.numberElements == this.targetNumber.value)
+    }
     this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
     this.dataSource.sort = this.sort;
     this.listPossibleNumber=this.lastData.map(current=>current.numeroCapteur)
     this.selectNumber=this.listPossibleNumber[0]
+  }
+
+  deleteFiltres() {
+    this.refreshArray()
   }
 }

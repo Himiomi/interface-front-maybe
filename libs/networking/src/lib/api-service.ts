@@ -12,8 +12,8 @@ export class ApiService {
                private sensorDao:SensorDao,
                private stationDao:StationDao,
                private sensorTypeDao:SensorTypeDao,
-               private sensorValueDao:SensorValueDao,) {}
-
+               private sensorValueDao:SensorValueDao
+  ){}
   public getNewJoke(): void {
     let joke
     this.http.get<Joke>("https://official-joke-api.appspot.com/random_joke")
@@ -71,5 +71,4 @@ export class ApiService {
         )
       );
   }
-
 }
