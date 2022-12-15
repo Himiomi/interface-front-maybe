@@ -37,19 +37,24 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   differentDao=["SensorDao","StationDao","SensorTypeDao","SensorValueDao"]
   lastData:Array<SortableElements>
   fileTitle = 'Freyr_data';
+  selectNumber!: number;
+
+  targetNumber: any;
   selectControl = new FormControl();
 
   selection = new SelectionModel<SortableElements>(true, []);
+
+  selectComparaison: any;
+
   listPossibleNumber:number[]=[]
 
+  selectColomn: string=this.displayedColumns[0];
+
   selectedValue: any;
-
-
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
-
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
               private sensorTypeDao:SensorTypeDao,
@@ -75,9 +80,11 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   ngOnInit(){
     this.refreshArray()
   }
+
   ngAfterViewInit(){
     this.refreshArray()
   }
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
@@ -96,7 +103,6 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.numeroCapteur + 1}`;
   }
-
   getSelection(){
     return this.selection.selected.map(current=>current.numeroCapteur)
   }
@@ -113,7 +119,6 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
   onRegister(){
     this.router.navigate(['/graphe'],
       { queryParams:
@@ -124,17 +129,16 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
           }
       });
   }
-
   refreshArray() {
     this.lastData=this.sensorValueDao.getAllData()
     this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
     this.dataSource.sort = this.sort;
     this.listPossibleNumber=this.lastData.map(current=>current.numeroCapteur)
+    this.selectNumber=this.listPossibleNumber[0]
   }
   getSensor() {
     this.apiService.getAllSensor()
   }
-
   getSensorValue() {
     this.apiService.getAllReading()
   }
@@ -147,6 +151,7 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     const body = items.map(item =>
       Object.values(item).join(separator)
     ).join('\n');
+    console.log(body)
     return columns + '\n' + body;
   }
 
@@ -156,6 +161,8 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   }
 
   download(data:any){
+    console.log("download...")
+    console.log(data)
     this.formatToCsvData(data)
     const exportedFilenmae = this.fileTitle + '.csv';
     const blob = new Blob([this.mockCsvData], { type: 'text/csv;charset=utf-8;' });
@@ -186,5 +193,17 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   debug() {
     console.log(this.range.value.start)
     console.log(this.range.value.end)
+  }
+
+  downloadSensorById() {
+    this.download(this.sensorValueDao.getSensorValueBySensorId(this.selectNumber))
+  }
+
+  filtre() {
+    this.lastData=this.sensorValueDao.getAllData()
+    this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
+    this.dataSource.sort = this.sort;
+    this.listPossibleNumber=this.lastData.map(current=>current.numeroCapteur)
+    this.selectNumber=this.listPossibleNumber[0]
   }
 }

@@ -95,4 +95,8 @@ export class SensorValueDao {
     return finalArray;
   }
 
+  public getSensorValueBySensorId(id:number){
+    return SensorValueDao.SensorList.filter(current=>current.sensorsId==id)
+  }
+
 }

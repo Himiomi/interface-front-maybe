@@ -67,7 +67,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>
-
+<br>
+<p *ngIf="selection.selected.length===0">Vous n'avez sélectionné aucun capteur</p>
+<p *ngIf="selection.selected.length!==0">Les elements sélectionnés sont: {{getSelection()}}</p>
+<br>
 <mat-form-field appearance="fill">
   <mat-label>Enter a date range</mat-label>
   <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
@@ -81,7 +84,7 @@
   <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
   <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
 </mat-form-field>
-
+<br>
 <div *ngIf="range.value">
   <div *ngIf="!range.value.start && range.value.end">
     <p>Vous aurez tous les relevés jusqu'au :{{range.value.end}}</p>
@@ -96,14 +99,66 @@
 <div *ngIf="!range.value.start && !range.value.end">
   <p>Vous n'avez selectionné aucune période de date</p>
 </div>
-
-<p *ngIf="selection.selected.length===0">Vous n'avez sélectionné aucun capteur</p>
-<p *ngIf="selection.selected.length!==0">Les elements sélectionnés sont: {{getSelection()}}</p>
 <button mat-raised-button color="primary" (click)="onRegister()">Générer le graphique</button>
-<button mat-raised-button color="primary" (click)="refreshArray()">Rafraichir le graphique</button>
 <br><br>
 <button mat-raised-button color="primary" (click)="getSensor()">Récupérer les capteurs</button>
 <button mat-raised-button color="primary" (click)="getSensorValue()">Récupérer les relevés</button>
+<button mat-raised-button color="primary" (click)="refreshArray()">Rafraichir le tableau</button>
+<button mat-raised-button color="primary" (click)="downloadSortableValue()">Télécharger le tableau</button>
+
 <br><br><br>
-<button mat-raised-button (click)="downloadSortableValue()">Downlad CSV</button>
+
+<div style="display:inline;">
+  <mat-form-field appearance="fill">
+    <mat-label>Capteur à selectionner</mat-label>
+    <mat-select [(value)]="selectNumber">
+      <mat-option [value]="option" *ngFor="let option of listPossibleNumber">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button (click)="downloadSensorById()">Télécharger les données d'un capteur</button>
+  <br>
+  <table class="filtrer">
+    <tr>
+      <td>
+        <mat-form-field appearance="fill">
+          <mat-label>Colonne à filtrer</mat-label>
+          <mat-select [(value)]="selectColomn">
+            <mat-option [value]="option" *ngFor="let option of displayedColumns">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td *ngIf="selectColomn==='numeroCapteur'">
+        <mat-form-field appearance="fill">
+          <mat-label>Comparaison</mat-label>
+          <mat-select [(value)]="selectComparaison">
+            <mat-option [value]="option" *ngFor="let option of ['<','>','=']">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </td>
+        <td *ngIf="selectColomn==='numeroCapteur'">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre limite</mat-label>
+          <mat-select [(value)]="targetNumber">
+            <mat-option [value]="option" *ngFor="let option of listPossibleNumber">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+      <td>
+        <button mat-raised-button (click)="filtre()">Filtrer les capteurs</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
+<br>
 <button mat-button (click)="debug()">debug</button>
