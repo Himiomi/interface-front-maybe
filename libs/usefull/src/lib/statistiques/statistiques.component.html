@@ -81,12 +81,27 @@
   <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
   <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
 </mat-form-field>
-<p>L'intervalle de date voulu est :{{range.value | json}}</p>
+
+<div *ngIf="range.value">
+  <div *ngIf="!range.value.start && range.value.end">
+    <p>Vous aurez tous les relevés jusqu'au :{{range.value.end}}</p>
+  </div>
+  <div *ngIf="range.value.start && !range.value.end">
+    <p>Vous aurez tous les relevés à partir du : {{range.value.start}}</p>
+  </div>
+  <div *ngIf="range.value.start && range.value.end">
+    <p>Vous aurez les relevés entre le {{range.value.start}} et le {{range.value.end}}</p>
+  </div>
+</div>
+<div *ngIf="!range.value.start && !range.value.end">
+  <p>Vous n'avez selectionné aucune période de date</p>
+</div>
+
 <p *ngIf="selection.selected.length===0">Vous n'avez sélectionné aucun capteur</p>
 <p *ngIf="selection.selected.length!==0">Les elements sélectionnés sont: {{getSelection()}}</p>
 <button mat-raised-button color="primary" (click)="onRegister()">Générer le graphique</button>
 <button mat-raised-button color="primary" (click)="refreshArray()">Rafraichir le graphique</button>
-<br>
+<br><br>
 <button mat-raised-button color="primary" (click)="getSensor()">Récupérer les capteurs</button>
 <button mat-raised-button color="primary" (click)="getSensorValue()">Récupérer les relevés</button>
 <br><br><br>

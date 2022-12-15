@@ -21,7 +21,7 @@ export class CircleMenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.buttonList.push(
-      new BoutonCircleMenu('/home', 'Acceuil'),
+      new BoutonCircleMenu('/home', 'Accueil'),
       new BoutonCircleMenu('/setting', 'Parametres'),
       new BoutonCircleMenu('/help', 'Aide'),
       new BoutonCircleMenu('/about', 'A propos')

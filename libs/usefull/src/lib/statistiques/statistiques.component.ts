@@ -150,15 +150,15 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     return columns + '\n' + body;
   }
 
-  formatToCsvData() {
-    const csv = this.convertToCSV(this.lastData);
+  formatToCsvData(data:any) {
+    const csv = this.convertToCSV(data);
     this.mockCsvData =  this.mockHeaders + csv;
   }
 
   download(data:any){
-    this.formatToCsvData()
+    this.formatToCsvData(data)
     const exportedFilenmae = this.fileTitle + '.csv';
-    const blob = new Blob([data], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([this.mockCsvData], { type: 'text/csv;charset=utf-8;' });
     if (navigator.msSaveBlob) {
       navigator.msSaveBlob(blob, exportedFilenmae);
     } else {
