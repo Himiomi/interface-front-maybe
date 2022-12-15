@@ -49,7 +49,7 @@ export class SortableElements {
               avg:number,
               numberElements:number) {
     this._numberElements = numberElements;
-    this._avg = avg;
+    this._avg = parseFloat(avg.toFixed(2));
     this._dateDeCapture = dateDeCapture;
     this._valeur = valeur;
     this._numeroCapteur = numeroCapteur;
