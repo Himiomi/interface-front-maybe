@@ -110,6 +110,9 @@ import {MatTreeModule} from '@angular/material/tree';
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+
+    BrowserModule /* or CommonModule */,
+    FormsModule, ReactiveFormsModule
   ],
   declarations: [SelectableListComponent, StatistiquesComponent],
   exports: [SelectableListComponent, StatistiquesComponent],

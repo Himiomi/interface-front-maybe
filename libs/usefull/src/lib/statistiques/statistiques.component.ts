@@ -8,8 +8,9 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {Router} from "@angular/router";
 import {ApiService} from "@interface-front/networking";
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {debounceTime} from "rxjs";
+import {STEPPER_GLOBAL_OPTIONS} from '@angular/cdk/stepper';
 
 
 declare global {
@@ -24,6 +25,12 @@ declare global {
   templateUrl: './statistiques.component.html',
   styleUrls: ['./statistiques.component.less'],
   encapsulation: ViewEncapsulation.None,
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {showError: true},
+    },
+  ],
 })
 export class StatistiquesComponent implements OnInit,AfterViewInit{
 
@@ -60,6 +67,9 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   });
   targetDate = new FormControl();
 
+  firstFormGroup: FormGroup = this._formBuilder.group({firstCtrl: ['']});
+  secondFormGroup: FormGroup = this._formBuilder.group({secondCtrl: ['']});
+
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
               private sensorTypeDao:SensorTypeDao,
@@ -67,8 +77,10 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
               private scroller: ViewportScroller,
               private _liveAnnouncer: LiveAnnouncer,
               private apiService:ApiService,
-              private router:Router
+              private router:Router,
+              private _formBuilder: FormBuilder
   ) {
+
     this.lastData=this.sensorValueDao.getAllData()
     this.dataSource=new MatTableDataSource<SortableElements>(this.lastData)
     this.dataSource.sort = this.sort;
@@ -268,5 +280,13 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
 
   deleteSelection() {
     this.selectedSensor=[]
+  }
+
+  deleteSensorFromStore(a: number) {
+    this.selectedSensor=this.selectedSensor.filter(current=>current!=a)
+  }
+
+  deleteSensorFromSelection(a: number) {
+    this.selection.deselect(this.selection.selected.filter(current=>current.numeroCapteur==a)[0])
   }
 }

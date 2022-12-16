@@ -56,6 +56,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTreeModule} from "@angular/material/tree";
 import {PortalModule} from "@angular/cdk/portal";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
@@ -124,6 +125,9 @@ import {PortalModule} from "@angular/cdk/portal";
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+
+    BrowserModule /* or CommonModule */,
+    FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
