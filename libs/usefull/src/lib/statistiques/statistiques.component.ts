@@ -41,14 +41,15 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   lastData:Array<SortableElements>
   listPossibleNumber:number[]=[]
 
+  differentComparaison=['=','<','>']
   selectNumber!: number;
-  targetNumber=new FormControl();
+  targetNumber:any;
 
   selectControl = new FormControl();
 
   selection = new SelectionModel<SortableElements>(true, []);
 
-  selectComparaison: any;
+  selectComparaison =this.differentComparaison[0];
 
   selectColomn= new FormControl(this.displayedColumns[0]);
 
@@ -75,10 +76,11 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     this.selectColomn.valueChanges.pipe(
       debounceTime(500),
     ).subscribe(()=>{
-        this.selectComparaison = null;
-        this.targetNumber = new FormControl();
+        this.selectComparaison = this.differentComparaison[0];
+        this.targetNumber = new FormControl(0);
       }
     )
+    this.targetNumber = new FormControl(0);
 
   }
 
