@@ -186,8 +186,13 @@
   </table>
 </div>
 <br>
+<button mat-raised-button color="primary" (click)="saveSensor()">Sauvegarder la selection</button>
+<button mat-raised-button color="primary" (click)="deleteSelection()">Supprimer la selection</button>
+
 <p *ngIf="selection.selected.length===0">Vous n'avez sélectionné aucun capteur</p>
 <p *ngIf="selection.selected.length!==0">Les elements sélectionnés sont: {{getSelection()}}</p>
+<p *ngIf="selectedSensor.length===0">Vous n'avez sauvegardé aucun capteur</p>
+<p *ngIf="selectedSensor.length!==0">Les capteurs sauvegardés sont : {{selectedSensor}}</p>
 <br>
 <mat-form-field appearance="fill">
   <mat-label>Enter a date range</mat-label>
@@ -217,7 +222,8 @@
 <div *ngIf="!range.value.start && !range.value.end">
   <p>Vous n'avez selectionné aucune période de date</p>
 </div>
-<button mat-raised-button color="primary" (click)="onRegister()">Générer le graphique</button>
+<button mat-raised-button color="primary" (click)="onRegister()">Générer le graphique de la sauvegarde</button>
+<button mat-raised-button color="primary" (click)="onRegisterSelection()">Générer le graphique de la selection actuelle</button>
 <br><br>
 <button mat-raised-button color="primary" (click)="getSensor()">Récupérer les capteurs</button>
 <button mat-raised-button color="primary" (click)="getSensorValue()">Récupérer les relevés</button>

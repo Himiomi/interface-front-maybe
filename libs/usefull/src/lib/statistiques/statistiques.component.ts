@@ -33,6 +33,7 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   private mockCsvData="";
   fileTitle = 'Freyr_data';
 
+  selectedSensor:number[]=[]
 
   displayedColumns: string[] = ['select','numeroCapteur', 'valeur', 'dateDeCapture', 'avg','numberElements'];
   dataSource = new MatTableDataSource<SortableElements>();
@@ -123,6 +124,16 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
     }
   }
   onRegister(){
+    this.router.navigate(['/graphe'],
+      { queryParams:
+          {
+            myArray: JSON.stringify(this.selectedSensor),
+            dateStart: this.range.value.start,
+            dateEnd: this.range.value.end
+          }
+      });
+  }
+  onRegisterSelection(){
     this.router.navigate(['/graphe'],
       { queryParams:
           {
@@ -240,5 +251,17 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
 
   deleteFiltres() {
     this.refreshArray()
+  }
+
+  saveSensor() {
+    this.selection.selected.map(current=>current.numeroCapteur)
+      .forEach(current=>this.selectedSensor.push(current))
+      this.selectedSensor= this.selectedSensor.filter(
+        (thing, i, arr) => arr.findIndex(t => t === thing) === i
+      );
+  }
+
+  deleteSelection() {
+    this.selectedSensor=[]
   }
 }
