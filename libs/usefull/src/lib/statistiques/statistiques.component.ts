@@ -216,6 +216,8 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
   }
 
   filtre() {
+
+    this.selection.clear()
  //   this.lastData=this.sensorValueDao.getAllData()
     console.log(this.selectComparaison)
     console.log(this.targetNumber.value)
@@ -253,6 +255,7 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
 
   deleteFiltres() {
     this.refreshArray()
+    this.selection.clear()
   }
 
   saveSensor() {
