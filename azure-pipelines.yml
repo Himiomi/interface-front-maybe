@@ -3,17 +3,6 @@ trigger:
 pr:
   - main
 
-variables:
-  CI: 'true'
-  ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
-    NX_BRANCH: $(System.PullRequest.PullRequestNumber)
-    TARGET_BRANCH: $[replace(variables['System.PullRequest.TargetBranch'],'refs/heads/','origin/')]
-    BASE_SHA: $(git merge-base $(TARGET_BRANCH) HEAD)
-  ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-    NX_BRANCH: $(Build.SourceBranchName)
-    BASE_SHA: $(git rev-parse HEAD~1)
-  HEAD_SHA: $(git rev-parse HEAD)
-
 jobs:
   - job: main
     pool:
@@ -24,6 +13,6 @@ jobs:
       - script: npx nx workspace-lint
       - script: npx nx format:check
 
-      - script: npx nx affected --base=$(BASE_SHA) --target=lint 
-      - script: npx nx affected --base=$(BASE_SHA) --target=test --ci --code-coverage
-      - script: npx nx affected --base=$(BASE_SHA) --target=build
+      - script: npx nx affected --target=lint 
+      - script: npx nx affected --target=test --ci --code-coverage
+      - script: npx nx affected --target=build
