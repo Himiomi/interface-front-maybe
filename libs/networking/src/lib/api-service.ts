@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Joke, Sensor, SensorValue} from "@interface-front/entity";
-import {JokeDao, SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-front/storage";
+import {JokeDao, ParamDao, SensorDao, SensorTypeDao, SensorValueDao, StationDao} from "@interface-front/storage";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class ApiService {
   }
   public getAllSensor(): void {
     let sensor:Array<Sensor>
-    this.http.get<Array<Sensor>>("http://localhost:8080/sensor")
+    this.http.get<Array<Sensor>>("http://"+ParamDao.ip+":"+ParamDao.port+"/sensor")
       .subscribe(
         (read=>{
             sensor=read
@@ -47,7 +47,7 @@ export class ApiService {
   }
   public getAllReading(): void {
     let sensor:Array<SensorValue>
-    this.http.get<Array<SensorValue>>("http://localhost:8080/data")
+    this.http.get<Array<SensorValue>>("http://"+ParamDao.ip+":"+ParamDao.port+"/data")
       .subscribe(
         (read=>{
             sensor=read

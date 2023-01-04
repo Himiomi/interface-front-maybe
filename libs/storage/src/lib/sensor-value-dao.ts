@@ -99,4 +99,8 @@ export class SensorValueDao {
     return SensorValueDao.SensorList.filter(current=>current.sensorsId==id)
   }
 
+  public deleteAll(){
+    SensorValueDao.SensorList=[]
+  }
+
 }

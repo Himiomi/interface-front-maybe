@@ -23,4 +23,8 @@ export class StationDao {
   public getListId(){
     return StationDao.SensorList.map(sensor => sensor.id)
   }
+
+  public deleteAll(){
+    StationDao.SensorList=[]
+  }
 }

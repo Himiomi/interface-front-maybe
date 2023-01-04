@@ -1,1 +1,10 @@
-<p>settings works!</p>
+<mat-form-field class="example-full-width">
+  <mat-label>IP</mat-label>
+  <input matInput type="string" maxlength="15" placeholder="" [formControl]="ip">
+</mat-form-field><mat-form-field class="example-full-width">
+  <mat-label>port</mat-label>
+  <input matInput type="number" maxlength="7" placeholder="" [formControl]="port">
+</mat-form-field>
+<button (click)="save()">Sauvegarder</button>
+
+<button (click)="createValue()">Générer des données aléatoires</button>
