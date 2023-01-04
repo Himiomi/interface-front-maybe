@@ -1,0 +1,18 @@
+trigger:
+  - main
+pr:
+  - main
+
+jobs:
+  - job: main
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - script: npm ci
+
+      - script: npx nx workspace-lint
+      - script: npx nx format:check
+
+      - script: npx nx affected --target=lint 
+      - script: npx nx affected --target=test --ci --code-coverage
+      - script: npx nx affected --target=build
