@@ -1,15 +1,16 @@
 {
   "name": "interface-front",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
     "start": "nx serve classic-client",
-    "start-autohost": "nx serve classic-client --host 0.0.0.0",
+    "start-autohost": "nx serve classic-client --host 0.0.0.0 --prod",
     "build": "nx build",
     "test": "nx test",
     "reset": "nx reset",
+    "graph": "nx dep-graph",
     "build prod": "nx build --prod",
     "sync-android": "npx cap sync",
     "open-android": "npx cap open android",

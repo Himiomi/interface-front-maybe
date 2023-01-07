@@ -25,4 +25,8 @@ export class SensorTypeDao {
     return SensorTypeDao.SensorList.map(sensor => sensor.id)
   }
 
+  public deleteAll(){
+    SensorTypeDao.SensorList=[]
+  }
+
 }

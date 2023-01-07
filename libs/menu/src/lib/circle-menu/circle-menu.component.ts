@@ -10,14 +10,18 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class CircleMenuComponent implements OnInit {
   buttonList: BoutonCircleMenu[] = [];
 
-  isMobile=false
+  isMobile=true
   mobileWidth = 760;
   innerWidth: number=window.innerWidth;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.innerWidth = window.innerWidth;
+    if(this.innerWidth<=this.mobileWidth) this.isMobile=true
+    else this.isMobile=false
+  }
 
   ngOnInit(): void {
     this.buttonList.push(

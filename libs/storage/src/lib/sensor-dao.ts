@@ -32,4 +32,8 @@ export class SensorDao {
     return SensorDao.SensorList.length
   }
 
+  public deleteAll(){
+    SensorDao.SensorList=[]
+  }
+
 }
