@@ -36,7 +36,7 @@
 <mat-vertical-stepper [linear]="false" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <ng-template matStepLabel>Selection des capteurs</ng-template>
-    <div style="display:inline;" class="div_filtre">
+    <div style="display:inline;">
       <table class="filtrer">
         <tr>
           <td>
@@ -142,10 +142,14 @@
               </mat-form-field>
             </td>
           </div>
+          <td>
+            <button mat-raised-button color="primary" (click)="filtre()">Filtrer les capteurs</button>
+          </td>
+          <td>
+            <button mat-raised-button color="primary" (click)="deleteFiltres()">Supprimer les filtres</button>
+          </td>
         </tr>
       </table>
-      <button mat-raised-button color="primary" (click)="filtre()">Filtrer les capteurs</button>
-      <button mat-raised-button color="primary" (click)="deleteFiltres()">Supprimer les filtres</button>
     </div>
 
 
