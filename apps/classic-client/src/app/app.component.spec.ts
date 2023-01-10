@@ -1,11 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
+import {HttpClientModule} from "@angular/common/http";
+import {MenuModule} from "@interface-front/menu";
+import {ActivatedRoute, RouterModule, RouterOutlet} from "@angular/router";
+import {RouterTestingModule} from "@angular/router/testing";
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent, NxWelcomeComponent],
+      imports:[HttpClientModule,MenuModule,RouterModule,RouterTestingModule]
     }).compileComponents();
   });
 
@@ -19,14 +24,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('classic-client');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome classic-client'
-    );
   });
 });

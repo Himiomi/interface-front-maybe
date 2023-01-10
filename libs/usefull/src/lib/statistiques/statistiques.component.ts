@@ -24,7 +24,6 @@ declare global {
   selector: 'interface-front-statistiques',
   templateUrl: './statistiques.component.html',
   styleUrls: ['./statistiques.component.less'],
-  encapsulation: ViewEncapsulation.None,
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
