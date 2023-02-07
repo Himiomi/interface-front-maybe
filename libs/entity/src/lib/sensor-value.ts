@@ -26,7 +26,8 @@ export class SensorValue extends GenericData{
     return this._captureDate;
   }
   public formatedDate(){
-    const format = 'hh:mm:ss dd/MM/yyyy';
+ //   const format = 'hh:mm:ss dd/MM/yyyy';
+    const format = 'dd/MM/yyyy';
     const locale = 'en-US';
     return formatDate(this.captureDate,format,locale)
   }

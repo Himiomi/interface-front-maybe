@@ -50,6 +50,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
+import {STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @NgModule({
   imports: [
@@ -116,5 +117,8 @@ import {MatTreeModule} from '@angular/material/tree';
   ],
   declarations: [SelectableListComponent, StatistiquesComponent],
   exports: [SelectableListComponent, StatistiquesComponent],
+  providers: [{
+      provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false}
+  }]
 })
 export class UsefullModule {}

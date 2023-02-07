@@ -1,7 +1,7 @@
 <p>Liste des capteurs selectionnables :</p>
 
 <p *ngIf="selection.selected.length===0">Vous n'avez sélectionné aucun capteur</p>
-<div *ngIf="selection.selected.length!==0">
+<div class="scrollable_boxer" *ngIf="selection.selected.length!==0">
   <p>Les elements sélectionnés sont:</p>
   <table>
       <td *ngFor="let a of getSelection()">
@@ -17,7 +17,7 @@
   </table>
 </div>
 <p *ngIf="selectedSensor.length===0">Vous n'avez sauvegardé aucun capteur</p>
-<div *ngIf="selectedSensor.length!==0">
+<div class="scrollable_boxer" *ngIf="selectedSensor.length!==0">
   <p>Les elements sélectionnés sont:</p>
   <table>
     <td *ngFor="let a of selectedSensor">
@@ -33,121 +33,123 @@
   </table>
 </div>
 
-<mat-vertical-stepper [linear]="false" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <ng-template matStepLabel>Selection des capteurs</ng-template>
-    <div style="display:inline;" class="div_filtre">
-      <table class="filtrer">
-        <tr>
-          <td>
-            <mat-form-field appearance="fill">
-              <mat-label>Colonne à filtrer</mat-label>
-              <mat-select name="test" [formControl]="selectColomn" >
-                <mat-option name="test"  [value]="option" *ngFor="let option of displayedColumns">
-                  {{option}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </td>
-          <div *ngIf="selectColomn.value==='numeroCapteur'">
+<mat-stepper [linear]="true">
+  <mat-step label="Step 1" state="add">
+    <ng-template matStepLabel>Capteurs</ng-template>
+      <div style="display:inline;" class="div_filtre">
+        <div class="scrollable_boxer">
+
+          <table class="filtrer">
+          <tr>
             <td>
               <mat-form-field appearance="fill">
-                <mat-label>Comparaison</mat-label>
-                <mat-select name="test"  [(value)]="selectComparaison">
-                  <mat-option name="test"  [value]="option" *ngFor="let option of differentComparaison">
+                <mat-label>Colonne à filtrer</mat-label>
+                <mat-select name="test" [formControl]="selectColomn" >
+                  <mat-option name="test"  [value]="option" *ngFor="let option of displayedColumns">
                     {{option}}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
             </td>
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Nombre limite</mat-label>
-                <input  name="test" matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
-              </mat-form-field>
-            </td>
-          </div>
-          <div *ngIf="selectColomn.value==='valeur'">
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Comparaison</mat-label>
-                <mat-select name="test"  [(value)]="selectComparaison">
-                  <mat-option name="test"  [value]="option" *ngFor="let option of differentComparaison">
-                    {{option}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Nombre limite</mat-label>
-                <input name="test" matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
-              </mat-form-field>
-            </td>
-          </div>
-          <div *ngIf="selectColomn.value==='numberElements'">
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Comparaison</mat-label>
-                <mat-select  name="test" [(value)]="selectComparaison">
-                  <mat-option  name="test" [value]="option" *ngFor="let option of differentComparaison">
-                    {{option}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Nombre limite</mat-label>
-                <input name="test"matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
-              </mat-form-field>
-            </td>
-          </div>
-          <div *ngIf="selectColomn.value==='dateDeCapture'">
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Comparaison</mat-label>
-                <mat-select  name="test" [(value)]="selectComparaison">
-                  <mat-option  name="test" [value]="option" *ngFor="let option of differentComparaison">
-                    {{option}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Choose a date</mat-label>
-                <input  name="test" [formControl]="targetDate" matInput [matDatepicker]="picker">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-            </td>
-          </div>
-          <div *ngIf="selectColomn.value==='avg'">
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Comparaison</mat-label>
-                <mat-select name="test"  [(value)]="selectComparaison">
-                  <mat-option name="test"  [value]="option" *ngFor="let option of differentComparaison">
-                    {{option}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field appearance="fill">
-                <mat-label>Nombre limite</mat-label>
-                <input name="test" matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
-              </mat-form-field>
-            </td>
-          </div>
-        </tr>
-      </table>
+            <div *ngIf="selectColomn.value==='numeroCapteur'">
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Comparaison</mat-label>
+                  <mat-select name="test"  [(value)]="selectComparaison">
+                    <mat-option name="test"  [value]="option" *ngFor="let option of differentComparaison">
+                      {{option}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Nombre limite</mat-label>
+                  <input  name="test" matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
+                </mat-form-field>
+              </td>
+            </div>
+            <div *ngIf="selectColomn.value==='valeur'">
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Comparaison</mat-label>
+                  <mat-select name="test"  [(value)]="selectComparaison">
+                    <mat-option name="test"  [value]="option" *ngFor="let option of differentComparaison">
+                      {{option}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Nombre limite</mat-label>
+                  <input name="test" matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
+                </mat-form-field>
+              </td>
+            </div>
+            <div *ngIf="selectColomn.value==='numberElements'">
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Comparaison</mat-label>
+                  <mat-select  name="test" [(value)]="selectComparaison">
+                    <mat-option  name="test" [value]="option" *ngFor="let option of differentComparaison">
+                      {{option}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Nombre limite</mat-label>
+                  <input name="test"matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
+                </mat-form-field>
+              </td>
+            </div>
+            <div *ngIf="selectColomn.value==='dateDeCapture'">
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Comparaison</mat-label>
+                  <mat-select  name="test" [(value)]="selectComparaison">
+                    <mat-option  name="test" [value]="option" *ngFor="let option of differentComparaison">
+                      {{option}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Choose a date</mat-label>
+                  <input  name="test" [formControl]="targetDate" matInput [matDatepicker]="picker">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+            </div>
+            <div *ngIf="selectColomn.value==='avg'">
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Comparaison</mat-label>
+                  <mat-select name="test"  [(value)]="selectComparaison">
+                    <mat-option name="test"  [value]="option" *ngFor="let option of differentComparaison">
+                      {{option}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field appearance="fill">
+                  <mat-label>Nombre limite</mat-label>
+                  <input name="test" matInput type="number" maxlength="3" placeholder="" [formControl]="targetNumber">
+                </mat-form-field>
+              </td>
+            </div>
+          </tr>
+        </table>
+        </div>
       <button mat-raised-button color="primary" (click)="filtre()">Filtrer les capteurs</button>
       <button mat-raised-button color="primary" (click)="deleteFiltres()">Supprimer les filtres</button>
     </div>
-
 
     <div class="scrollable_boxer">
       <table mat-table [dataSource]="dataSource"
@@ -225,9 +227,8 @@
     <button mat-raised-button color="primary" (click)="refreshArray()">Rafraichir le tableau</button>
     <button mat-raised-button color="primary" (click)="downloadSortableValue()">Télécharger le tableau</button>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <ng-template matStepLabel matStepperIcon="phone" >Selection des dates</ng-template>
-
+  <mat-step label="Step 2" state="calendar_today">
+    <ng-template matStepLabel>Dates</ng-template>
 
     <mat-form-field appearance="fill">
   <mat-label>Enter a date range</mat-label>
@@ -258,8 +259,8 @@
   <p>Vous n'avez selectionné aucune période de date</p>
 </div>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Generation du graphe</ng-template>
+  <mat-step label="Step 3" state="end">
+    <ng-template matStepLabel>Graphe</ng-template>
 
     <button mat-raised-button color="primary" (click)="onRegister()">Générer le graphique de la sauvegarde</button>
     <button mat-raised-button color="primary" (click)="onRegisterSelection()">Générer le graphique de la selection actuelle</button>
@@ -280,4 +281,4 @@
 <button mat-button (click)="debug()">debug</button>
 
   </mat-step>
-</mat-vertical-stepper>
+</mat-stepper>

@@ -85,7 +85,7 @@ export class SensorValueDao {
       finalArray.push(
         new SortableElements(
           currentElement.sensorsId,
-          currentElement.value,
+          parseFloat(currentElement.value.toFixed(2)),
           currentElement.formatedDate(),
           avg[i],
           size[i]

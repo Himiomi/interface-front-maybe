@@ -13,3 +13,5 @@ export * from './lib/account/account.component';
 export * from './lib/home/home.component';
 
 export * from './lib/detail-page/detail-page.component';
+
+export * from './lib/vitrine/vitrine.component'

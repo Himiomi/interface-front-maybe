@@ -68,6 +68,7 @@ export class StatistiquesComponent implements OnInit,AfterViewInit{
 
   firstFormGroup: FormGroup = this._formBuilder.group({firstCtrl: ['']});
   secondFormGroup: FormGroup = this._formBuilder.group({secondCtrl: ['']});
+  thirdFormGroup: FormGroup = this._formBuilder.group({thirdCtrl: ['']});
 
   constructor(private sensorDao:SensorDao,
               private stationDao:StationDao,
